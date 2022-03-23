@@ -2,5 +2,9 @@ from django.shortcuts import render, HttpResponse
 
 
 # Create your views here.
-def index(request):
-    return HttpResponse('Hello world')
+def base(request):
+    return render(request, 'budget_app/base.html')
+def home(request):
+    return render(request, 'budget_app/home.html')
+def register(request):
+    return render(request, 'budget_app/register.html')

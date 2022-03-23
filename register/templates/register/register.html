@@ -1,0 +1,13 @@
+{% extends 'budget_app/base.html' %}
+
+{% block title %}Create a new account{% endblock %}
+
+{% block content %} 
+    <form method = "POST", class = 'form-group'>
+        {% csrf_token %}
+        {{form}}
+        <button type = "submit" class = "btn btn-success">
+            Join
+        </button>
+    </form>
+{% endblock %}
