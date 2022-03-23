@@ -31,6 +31,16 @@
             padding: 0px 10px;
         }
 
+        .user_box{
+            padding: 6px 8px 16px 6px;
+            font-size: 20px;
+            color:darkslategray;
+            display: block;
+        }
+
+        .logout-box{
+            bottom: 0%;
+        }
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -43,7 +53,19 @@
 </head>
 <body>
     <div class = 'sidenav'>
+        <div class = "user_box">
+            {% if user.is_authenticated %}
+                <p>Hi {{user}}!</p>
+            {% else %}
+                <p><a href = 'login/'>Log in!</a></p>
+            {% endif %}
+        </div>
         <a href = '/home'>Home</a>
+        <div class = "logout-box">
+            {% if user.is_authenticated %}
+                <p><a href = {% url 'logout' %}>Log out<a></p>
+            {% endif %}
+        </div>
     </div>
 
     <div id="content", name = "content", class = "main">

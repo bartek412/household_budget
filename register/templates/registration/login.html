@@ -6,10 +6,11 @@
 {% load crispy_forms_tags %}
 
 <form method = 'post', class = 'form-group'>
-    {csrf_token}
+    {% csrf_token %}
     {{form|crispy}}
-    <button type = 'submit' class = 'btn-success'>Login</button>
     <p>Dont have an account? <a href = '/register'>Create one!</a></p>
+    <button type = 'submit' class = 'btn-success'>Login</button>
+    
 </form>
 
 
