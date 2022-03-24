@@ -1,0 +1,7 @@
+venv
+__pycache__
+Projects/__pycache__
+budget_app/__pycache__
+.idea/Projects.iml
+.idea/misc.xml
+
