@@ -3,6 +3,11 @@
 
 {% block content %}
 
-<h1>{{user.username}}</h1>
+<div class = "content-section">
+    <h2 class = "account-heading">{{ user.username }}</h2>
+    <div class = "col justify-content-center">
+        <p class = "text-secondary">{{user.email}}</p>
+    </div>
+</div>
 
 {% endblock %}
