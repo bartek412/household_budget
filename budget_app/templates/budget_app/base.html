@@ -17,7 +17,7 @@
         .sidenav a{
             padding: 6px 8px 16px 6px;
             text-decoration: none;
-            font-size: 20px;
+            font-size: 15px;
             color:darkslategray;
             display: block;
         }
@@ -33,7 +33,7 @@
 
         .user_box{
             padding: 6px 8px 16px 6px;
-            font-size: 20px;
+            font-size: 15px;
             color:darkslategray;
             display: block;
         }
@@ -55,7 +55,7 @@
     <div class = 'sidenav'>
         <div class = "user_box">
             {% if user.is_authenticated %}
-                <p>Hi {{user}}!</p>
+                <p><a href = {% url 'profile' %}>Hi {{user}}!</a></p>
             {% else %}
                 <p><a href = 'login/'>Log in!</a></p>
             {% endif %}
