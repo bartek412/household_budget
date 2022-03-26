@@ -4,4 +4,6 @@ Projects/__pycache__
 budget_app/__pycache__
 .idea/Projects.iml
 .idea/misc.xml
-
+Projects/__pycache__/
+budget_app/migrations/__pycache__/
+register/__pycache__/

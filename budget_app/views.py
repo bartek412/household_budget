@@ -12,3 +12,7 @@ def home(request):
 
 def register(request):
     return render(request, "budget_app/register.html")
+
+
+def add_budget(request):
+    return render(request, "budget_app/add_budget.html")
