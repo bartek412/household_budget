@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from .forms import BudgetForm
 
 
 # Create your views here.
@@ -16,3 +17,13 @@ def register(request):
 
 def add_budget(request):
     return render(request, "budget_app/add_budget.html")
+
+
+def BudgetFormView(request):
+    form = BudgetForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context = {
+        'form': form
+    }
+    return render(request, "add_budget.html", context)
