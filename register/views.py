@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from os import path
 # Create your views here.
 
 def register(response):
@@ -13,7 +14,8 @@ def register(response):
         if form.is_valid():
             form.save()
         
-        return redirect('/login')  # po zarejestrowaniu przekierowanie na strone logowania
+        
+        return redirect('login')  # po zarejestrowaniu przekierowanie na strone logowania
     else:
         form = RegisterForm()
 
