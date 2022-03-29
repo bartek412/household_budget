@@ -14,3 +14,6 @@ def home(request, base_path = base_path):
 
 def register(request, base_path = base_path):
     return render(request, "budget_app/register.html",{'base_path':base_path})
+
+def test_base(request):
+    return render(request, "budget_app/test_base.html")

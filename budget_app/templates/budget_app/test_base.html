@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <style type = "text/css">
+        .sidenav{
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top:0;
+            left:0;
+            background-color:aliceblue;
+            overflow-x: hidden;
+            
+         
+        }
+
+        .sidenav a{
+            text-decoration: none;
+            font-size: 15px;
+            color:darkslategray;
+            display: block;
+            padding-left: 20px;
+            padding-top: 5px;
+            text-align: center;
+            
+        }
+
+        .sidenav_element a:hover{
+            color:#f1f1f1;
+            text-decoration: none;
+        }
+
+        .main{
+            margin-left: 160px;
+            padding: 0px 10px;
+        }
+
+        .user_box{
+            padding-left: 15px;
+            font-size: 15px;
+            color:darkslategray;
+            display: block;
+            
+        }
+
+        .logout-box{
+            bottom: 0%;
+        }
+        .app_title{
+            padding-left: 15px;
+        }
+        .sidenav_element{
+            margin: 10px 10px 10px 10px;
+            padding-left: 5px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: flex;
+            align-content: center;
+            border-style: hidden;
+            border-radius: 5px;
+        }
+  
+        .sidenav_element:hover{
+            background-color: blue;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>{% block title %}Budget app{% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand">
+        <div class="container-fluid d-flex flex-row-reverse bd-highlight">
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                    <a href = {% url 'logout' %}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                            <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                            <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                        </svg>
+                    </a>
+                </div>
+                    <div class="p-2 bd-highlight">
+                        <a href = '#'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-nut" viewBox="0 0 16 16">
+                                <path d="m11.42 2 3.428 6-3.428 6H4.58L1.152 8 4.58 2h6.84zM4.58 1a1 1 0 0 0-.868.504l-3.428 6a1 1 0 0 0 0 .992l3.428 6A1 1 0 0 0 4.58 15h6.84a1 1 0 0 0 .868-.504l3.429-6a1 1 0 0 0 0-.992l-3.429-6A1 1 0 0 0 11.42 1H4.58z"/>
+                                <path d="M6.848 5.933a2.5 2.5 0 1 0 2.5 4.33 2.5 2.5 0 0 0-2.5-4.33zm-1.78 3.915a3.5 3.5 0 1 1 6.061-3.5 3.5 3.5 0 0 1-6.062 3.5z"/>
+                            </svg>
+                        </a>
+                    </div>  
+                </div>
+        </div>       
+    </nav> 
+    
+    <div class = 'sidenav'>
+        <div class = 'app_title' style="padding-top: 20px;">
+            <h4>BudgetApp</h4>
+        </div>
+       
+            
+        <div class = 'sidenav_element'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-house-door" viewBox="0 0 15 15">
+                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+            </svg>
+            <a href = '/home'>Dashboard</a>
+        </div>
+    
+    
+        <div class = 'sidenav_element'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 15 15">
+                <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            <a href = '#'>Income</a>
+        </div>
+    
+        <div class = 'sidenav_element'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 15 15">
+                <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
+            </svg>
+            <a href = '#'>Expenses</a>
+        </div>
+
+        <div class = 'sidenav_element'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 15 15">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"/>
+            </svg>
+            <a href = '#'>Statistics</a>
+        </div>
+
+        <div class = 'sidenav_element'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 15 15">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+            </svg>
+            <a href = '#'>Categories</a>
+        </div>
+
+        
+        <div class = "logout-box">
+            {% if user.is_authenticated %}
+                <p><a href = {% url 'logout' %}>Log out<a></p>
+            {% endif %}
+        </div>
+        <!-- <div class = "user_box">
+            {% if user.is_authenticated %}
+                <p><a href = {% url 'profile' %}>Hi {{user}}!</a></p>
+            {% else %}
+                <p><a href = {% url 'login' %}>Log in!</a></p>
+            {% endif %}
+        </div> -->
+
+    </div>
+
+    <div id="content", name = "content", class = "main">
+        <div class = 'row justify-content-center'>
+            <div class = 'col-8 row justify-content-center' style = "border-style: ridge;">
+                <!-- <hr class = 'mt-0 mb-4'>  --> <!-- podkreslenie tytutlu -->
+                {% block content %}
+                <h4>*INSERT CONTENT*</h4>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
