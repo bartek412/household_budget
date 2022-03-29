@@ -2,6 +2,10 @@
 <html>
 <head>
     <style type = "text/css">
+        .body{
+            background-color:rgb(228, 243, 255);
+        }
+        
         .sidenav{
             height: 100%;
             width: 200px;
@@ -9,7 +13,7 @@
             z-index: 1;
             top:0;
             left:0;
-            background-color:aliceblue;
+            background-color:rgb(228, 243, 255);
             overflow-x: hidden;
             
          
@@ -58,7 +62,7 @@
             display: flex;
             align-content: center;
             border-style: hidden;
-            border-radius: 5px;
+            border-radius: 10px;
         }
   
         .sidenav_element:hover{
@@ -74,7 +78,7 @@
 
     <title>{% block title %}Budget app{% endblock %}</title>
 </head>
-<body>
+<body class = 'body'>
     <nav class="navbar navbar-expand">
         <div class="container-fluid d-flex flex-row-reverse bd-highlight">
             <div class="d-flex flex-row-reverse bd-highlight">
@@ -158,7 +162,7 @@
 
     <div id="content", name = "content", class = "main">
         <div class = 'row justify-content-center'>
-            <div class = 'col-8 row justify-content-center' style = "border-style: ridge;">
+            <div class = 'col-11 row justify-content-center' style = "border-style: hidden; background-color: white;border-radius: 10px;">
                 <!-- <hr class = 'mt-0 mb-4'>  --> <!-- podkreslenie tytutlu -->
                 {% block content %}
                 <h4>*INSERT CONTENT*</h4>
