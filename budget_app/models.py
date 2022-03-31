@@ -6,23 +6,26 @@ from django.conf import settings
 import budget_app.models
 
 
+class Budget(models.Model):
+    name = models.CharField(max_length=30)
+    users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, through='BudgetUser')
+    description = models.CharField(max_length=150)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=150)
-    parent_id = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-
-
-class Budget(models.Model):
-    name = models.CharField(max_length=30)
-    start_date = models.DateField(default=date.today)
-    end_date = models.DateField()
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='BudgetUser')
+    parent_id = models.ForeignKey(
+        'self', null=True, blank=True, on_delete=models.CASCADE)
+    budget_id = models.ForeignKey(Budget, on_delete=models.CASCADE)
 
 
 class BudgetUser(models.Model):
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     budget_id = models.ForeignKey(Budget, on_delete=models.CASCADE)
-    role = models.CharField(max_length=30)
+    role = models.IntegerField()
 
 
 class ExpenseIncome(models.Model):
@@ -31,5 +34,5 @@ class ExpenseIncome(models.Model):
     description = models.CharField(max_length=150)
     date = models.DateField(default=date.today)
     amount = models.DecimalField(decimal_places=2, max_digits=10)
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    budget_id = models.ForeignKey(Budget, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
