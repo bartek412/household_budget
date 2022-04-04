@@ -1,82 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    <style type = "text/css">
-        .body{
-            background-color:rgb(228, 243, 255);
-        }
-        
-        .sidenav{
-            height: 100%;
-            width: 200px;
-            position: fixed;
-            z-index: 1;
-            top:0;
-            left:0;
-            background-color:rgb(228, 243, 255);
-            overflow-x: hidden;
-            
-         
-        }
-
-        .sidenav a{
-            text-decoration: none;
-            font-size: 15px;
-            color:darkslategray;
-            display: block;
-            padding-left: 20px;
-            padding-top: 5px;
-            text-align: center;
-            
-        }
-
-        .sidenav_element a:hover{
-            color:#f1f1f1;
-            text-decoration: none;
-        }
-
-        .main{
-            margin-left: 160px;
-            padding: 0px 10px;
-        }
-
-        .user_box{
-            padding-left: 15px;
-            font-size: 15px;
-            color:darkslategray;
-            display: block;
-            
-        }
-
-        .logout-box{
-            bottom: 0%;
-        }
-        .app_title{
-            padding-left: 15px;
-        }
-        .sidenav_element{
-            margin: 10px 10px 10px 10px;
-            padding-left: 5px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            display: flex;
-            align-content: center;
-            border-style: hidden;
-            border-radius: 10px;
-        }
-  
-        .sidenav_element:hover{
-            background-color: blue;
-        }
-    </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
     <title>{% block title %}Budget app{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href= "{% static 'base.css' %}"
 </head>
 <body class = 'body'>
     <nav class="navbar navbar-expand">
