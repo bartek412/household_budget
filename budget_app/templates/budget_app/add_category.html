@@ -2,13 +2,31 @@
 
 {% block content %}
 
+
 <div class = 'row'>
     <form method = 'post' action = '#'>
+        {% csrf_token %}
         <ul>
-        <li>Name : <input type = "text" name = "category_name"></li>
+        <li>Name : <input type = "text" name = "name"></li>
         <li>Description : <input type = "text" name = "description"></li>
+        <li>
+            Budget: <select name = 'budget_id' id = 'budget_id'>
+            
+                {% for i in budgets %}
+                    <option value='{{ i.id }}'>{{ i.name }}</option>
+                {% endfor %}
+            </select>
+        </li>
+        <li>
+            Type: <select name = 'parent_id'>
+                {% for i in parent_categories %}
+                    <option value='{{i.id}}'>{{i.name}}</option>
+                {% endfor %}
+            </select>
+        </li>
         </ul>
+        <button type="submit" name = "category_added" value = "category_added">Add category</button>
     </form>
 </div>
-{{ budget_ids }}
+{{ budget_names }}
 {% endblock %}
