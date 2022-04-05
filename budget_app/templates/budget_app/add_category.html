@@ -1,0 +1,14 @@
+{% extends base_path %}
+
+{% block content %}
+
+<div class = 'row'>
+    <form method = 'post' action = '#'>
+        <ul>
+        <li>Name : <input type = "text" name = "category_name"></li>
+        <li>Description : <input type = "text" name = "description"></li>
+        </ul>
+    </form>
+</div>
+{{ budget_ids }}
+{% endblock %}

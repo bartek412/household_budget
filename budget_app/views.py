@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from os import path
 from .forms import BudgetForm
+from .models import BudgetUser
 
 base_path = path.join('budget_app', 'base.html')
 
@@ -28,3 +29,16 @@ def add_budget(request, base_path = base_path):
         form = BudgetForm()
   
     return render(request, "budget_app/add_budget.html", {'form': form, 'base_path': base_path})
+
+def add_category(request, base_path = base_path):
+
+    budgetUser_objects = BudgetUser.objects.get(user_id = request.user.id)
+    budget_ids = []
+    for i in budgetUser_objects:
+        budget_ids.append(i.budget_id)
+
+    if request.method == "POST":
+        pass
+
+    return render(request, "budget_app/add_category.html", {'base_path': base_path, 'budget_ids' : budget_ids})
+    
