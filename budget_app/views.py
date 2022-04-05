@@ -59,3 +59,22 @@ def add_category(request, base_path = base_path):
     return render(request, "budget_app/add_category.html", {'base_path': base_path, 
     'budgets' : budgets,'parent_categories':parent_categories})
     
+
+def edit_category(request, base_path = base_path):
+    # pobranie kategorii ze wszystkich budzetow w ktorych uzytkownik posiada prawa edycji
+    budgets = BudgetUser.objects.filter(user_id = request.user.id, role = 1) # zakładam, że 1 oznacza mozliwosc edycji
+    categories = []
+    for i in budgets:
+        for j in Category.objects.filter(budget_id = i.id):
+            categories.append(j)
+    categories = categories[2:] # dwie pierwsze kategorie to Expense i Income
+
+    if request.method == "POST":
+        category = Category.objects.get(id = request.POST['category'])
+        if request.POST['name'] != '' or request.POST['name'] != category.name:
+            category.name = request.POST['name']
+        if request.POST['description'] != '' or request.POST['description'] != category.description:
+            category.description = request.POST['description']
+        category.save()
+
+    return render(request, "budget_app/edit_category.html", {'base_path':base_path, 'categories': categories})
