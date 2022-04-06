@@ -23,14 +23,17 @@ def test_base(request):
     return render(request, "budget_app/test_base.html")
 
 def add_budget(request, base_path = base_path):
+    form = BudgetForm(request.POST)
     if request.method == 'POST':
         form = BudgetForm(request.POST)
         if form.is_valid():
             form.save()
     else:
         form = BudgetForm()
-  
+
     return render(request, "budget_app/add_budget.html", {'form': form, 'base_path': base_path})
+
+
 
 def add_category(request, base_path = base_path):
 
