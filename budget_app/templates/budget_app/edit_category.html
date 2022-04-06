@@ -1,24 +1,36 @@
 {% extends base_path %}
 
 {% block content %}
-<form method = "post" action="#">
-{% csrf_token %}
-    <ul>
-        <li>
-            Categort to edit: 
-            <select name = 'category'>
-                {% for i in categories %}
-                    <option value = {{i.id}}>{{i.name}} </option>
-                {% endfor %}
-            </select>
-        </li>
-        <li>
-            New name: <input type = "text" name = "name">
-        </li>
-        <li>
-            New description: <input type = "text" name = "description">
-        </li>
-    </ul>
-    <button type="submit" class = "success">Edit</button>
-</form>
+<div style = "padding: 10px 10px 10px 10px;">
+    <form method = "post" action="#">
+    {% csrf_token %}
+        
+            <div class = "form-group row" >
+                <label class = "col-sm-6 col-form-label" >Category to edit</label> 
+                <div class = "col-sm-2"></div>
+                <div class="col-sm-4">
+                    <select name = 'category' style = "width: 150px;" class = "custom-select">
+                        {% for i in categories %}
+                            <option value = {{i.id}}>{{i.name}} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class = "form-group row" >
+                <label class = "col-sm-6 col-form-label" >New name</label> 
+                <div class = "col-sm-2"></div>
+                <div class="col-sm-4">
+                    <input type = "text" name = "name" style = "width: 150px;" class = "form-control">
+                </div>
+            </div>
+            <div class = "form-group row" >
+                <label class = "col-sm-6 col-form-label" >New description</label> 
+                <div class = "col-sm-2"></div>
+                <div class="col-sm-4">
+                    <input type = "text" name = "description" style = "width: 150px;" class = "form-control">
+                </div>
+            </div>
+        <button type="submit" class = "btn btn-primary justify-content-center">Edit</button>
+    </form>
+</div>
 {% endblock %}

@@ -23,7 +23,6 @@
             <div class = "col-sm-4"></div>
             <div class="col-sm-6">
                 <select name = 'budget_id' id = 'budget_id' style = "width: 150px;" class = "custom-select">
-                
                     {% for i in budgets %}
                         <option value='{{ i.id }}'>{{ i.name }}</option>
                     {% endfor %}
@@ -33,15 +32,15 @@
         <div class = "form-group row">
             <label class = "col-sm-2 col-form-label" >Type</label> 
             <div class = "col-sm-4"></div>
-            <div class="col-sm-6">
-                <select name = 'parent_id' style = "width: 150px;" class = "custom-select">
-                    {% for i in parent_categories %}
-                        <option value='{{i.id}}'>{{i.name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
+                <div class="col-sm-6">
+                    <select name = 'parent_id' style = "width: 150px;" class = "custom-select">
+                        {% for i in parent_categories %}
+                            <option value='{{i.id}}'>{{i.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
         </div>
-        <button class = "btn btn-primary" type="submit" name = "category_added" value = "category_added">Add category</button>
+        <button class = "btn btn-primary justify-content-center" type="submit" name = "category_added" value = "category_added">Add category</button>
     </form>
 </div>
 {% endblock %}
