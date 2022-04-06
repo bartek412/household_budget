@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse
 from os import path
 from .forms import BudgetForm
-from .models import BudgetUser
+from .models import BudgetUser, Budget, Category
+from django.db.models import Q
+
 
 base_path = path.join('budget_app', 'base.html')
 
@@ -35,13 +37,47 @@ def add_budget(request, base_path = base_path):
 
 def add_category(request, base_path = base_path):
 
-    budgetUser_objects = BudgetUser.objects.get(user_id = request.user.id)
+    budgetUser_objects = BudgetUser.objects.filter(user_id = request.user.id)
     budget_ids = []
     for i in budgetUser_objects:
         budget_ids.append(i.budget_id)
+    budgets =[]
+    for i in budget_ids:
+        budgets.append(Budget.objects.get(id = i.id))
+
+    parent_categories = Category.objects.all()[:2]
 
     if request.method == "POST":
-        pass
+        # w odpowiedz post zwracany jest slownik z wartosciami z forma-a z template'u 'add_category'
+        # klucze w slowniku sa nazwami pol z template'u
+        name = request.POST['name']
+        description = request.POST['description']
+        parent_id = request.POST['parent_id']
+        budget_id = request.POST['budget_id']
 
-    return render(request, "budget_app/add_category.html", {'base_path': base_path, 'budget_ids' : budget_ids})
+        c = Category(name = name, description = description, parent_id = Category.objects.get(id = parent_id), 
+                    budget_id = Budget.objects.get(id = budget_id))
+        c.save()
+
+    return render(request, "budget_app/add_category.html", {'base_path': base_path, 
+    'budgets' : budgets,'parent_categories':parent_categories})
     
+
+def edit_category(request, base_path = base_path):
+    # pobranie kategorii ze wszystkich budzetow w ktorych uzytkownik posiada prawa edycji
+    budgets = BudgetUser.objects.filter(user_id = request.user.id, role = 1) # zakładam, że 1 oznacza mozliwosc edycji
+    categories = []
+    for i in budgets:
+        for j in Category.objects.filter(budget_id = i.id):
+            categories.append(j)
+    categories = categories[2:] # dwie pierwsze kategorie to Expense i Income
+
+    if request.method == "POST":
+        category = Category.objects.get(id = request.POST['category'])
+        if request.POST['name'] != '' or request.POST['name'] != category.name:
+            category.name = request.POST['name']
+        if request.POST['description'] != '' or request.POST['description'] != category.description:
+            category.description = request.POST['description']
+        category.save()
+
+    return render(request, "budget_app/edit_category.html", {'base_path':base_path, 'categories': categories})
