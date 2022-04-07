@@ -69,7 +69,7 @@ def edit_category(request, base_path=base_path):
     budgets = BudgetUser.objects.filter(user_id=request.user.id, role=1)  # zakładam, że 1 oznacza mozliwosc edycji
     categories = []
     for i in budgets:
-        for j in Category.objects.filter(budget_id=i.id):
+        for j in Category.objects.filter(budget_id=i.budget_id): # kategorie bez parent_id
             categories.append(j)
     categories = categories[2:]  # dwie pierwsze kategorie to Expense i Income
 
