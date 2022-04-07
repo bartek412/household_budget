@@ -103,22 +103,23 @@ def add_budget(request, base_path=base_path):
         # klucze w slowniku sa nazwami pol z template'u
         name = request.POST['name']
         description = request.POST['description']
-        user = request.POST['user']
-        #print(name, description, user_id)
+        users_list = request.POST.getlist('users_list')
+        print(name, description, users_list)
 
         # Dodanie nazwy budzetu i opisu do tabeli Budget
         b = Budget(name=name, description=description)
         b.save()
 
-        u = User.objects.get(username=user)
-        u.save()
+        for user in users_list:
+            u = User.objects.get(username=user)
+            # u.save()
 
-        budget_quantity = len(Budget.objects.all())-1
-        # Dodanie nazwy budzetu i opisu do tabeli Budget
-        # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[budget_quantity], role=1)
-        # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
-        bu = BudgetUser(user_id=u, budget_id=b, role=1)
-        bu.save()
+            budget_quantity = len(Budget.objects.all())-1
+            # Dodanie nazwy budzetu i opisu do tabeli Budget
+            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[budget_quantity], role=1)
+            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
+            bu = BudgetUser(user_id=u, budget_id=b, role=1)
+            bu.save()
 
     return render(request, "budget_app/add_budget.html", {'base_path': base_path,
                                                           'users': users})
