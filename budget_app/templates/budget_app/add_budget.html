@@ -1,9 +1,46 @@
 {% extends base_path %}
 
 {% block content %}
-
-<form method="POST"> {%  csrf_token %}
-{{ form.as_p }}
-<input type='submit' value='Save' />
-</form>
+<div style = "padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
+    <form method = 'post' action = '#'>
+        {% csrf_token %}
+        <div class = "form-group row" >
+            <label class = "col-sm-2 col-form-label">Name</label>
+            <div class = "col-sm-4"></div>
+            <div class="col-sm-6">
+                <input type = "text" name = "name" style = "width: 150px;" class = "form-control">
+            </div>
+        </div>
+        <div class = "form-group row">
+            <label class = "col-sm-2 col-form-label" >Description</label>
+            <div class = "col-sm-4"></div>
+            <div class="col-sm-6">
+                <input type = "text" name = "description" style = "width: 150px;" class = "form-control">
+            </div>
+        </div>
+        <div class = "form-group row">
+            <label class = "col-sm-2 col-form-label" >Users</label>
+            <div class = "col-sm-4"></div>
+            <div class="col-sm-6">
+                <select name = 'user' id = 'user' style = "width: 150px;" class = "custom-control custom-checkbox">
+                    {% for i in users %}
+                        <option value={{ i }}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+{#                  <div class="custom-control custom-checkbox">#}
+{#                      {% for i in users %}#}
+{#                        <input type="checkbox" class="custom-control-input" id={{ i }}>#}
+{#                        <label class="custom-control-label" for={{ i }}>{{ i }}</label><br>#}
+{#                      {% endfor %}#}
+{#                  </div>#}
+            </div>
+        </div>
+        <button class = "btn btn-primary" type="submit" name = "budget_added" value = "budget_added">Add budget</button>
+    </form>
+    <div>
+        {% for i in users %}
+            {{ i }}
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
