@@ -22,36 +22,15 @@
             <label class = "col-sm-2 col-form-label" >Users</label>
             <div class = "col-sm-4"></div>
             <div class="col-sm-6">
-<<<<<<< HEAD
-                <!-- <select name = 'user' id = 'user' style = "width: 150px;" class = "custom-control custom-checkbox">
-                    {% for i in users %}
-                        <option value='{{ i }}'>{{ i }}</option>
-                    {% endfor %}
-                </select> -->
-                  <div class="custom-control custom-checkbox">
-                      {% for i in users %}
-                        <input type="checkbox" class="custom-control-input" id='{{ i }}'>
-                        <label class="custom-control-label" for='{{ i }}'>{{ i }}</label><br>
-=======
-{#                <select name = 'user' id = 'user' style = "width: 150px;" class = "custom-control custom-checkbox">#}
-{#                    {% for i in users %}#}
-{#                        <option value={{ i }}>{{ i }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
                   <div class="custom-control custom-checkbox">
                       {% for i in users %}
                         <input type="checkbox" name="users_list" id='{{ i }}' value='{{ i }}'>
                         <label for='{{ i }}'>{{ i }}</label><br>
->>>>>>> ff18bbc06af0947de184cfaa63e0ae54d9348cd7
                       {% endfor %}
                   </div>
             </div>
         </div>
         <button class = "btn btn-primary" type="submit" name = "budget_added" value = "budget_added">Add budget</button>
     </form>
-<<<<<<< HEAD
-
-=======
->>>>>>> ff18bbc06af0947de184cfaa63e0ae54d9348cd7
 </div>
 {% endblock %}
