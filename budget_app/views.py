@@ -10,7 +10,12 @@ base_path = path.join('budget_app', 'base.html')
 
 # Create your views here.
 def base(request):
-    return render(request, "budget_app/base.html")
+    budgetUser_objects = BudgetUser.objects.filter(user_id=request.user.id)
+    budget_ids = []
+    for i in budgetUser_objects:
+        budget_ids.append(i.budget_id)
+    budgets_list = [Budget.objects.get(id = i.budget_id.id) for i in budgetUser_objects]
+    return render(request, "budget_app/base.html", {'budgets_list': budgets_list})
 
 
 def home(request, base_path=base_path):
@@ -123,3 +128,14 @@ def add_budget(request, base_path=base_path):
 
     return render(request, "budget_app/add_budget.html", {'base_path': base_path,
                                                           'users': users})
+
+def view_budget(request, budget_id, base_path=base_path):
+    budgetUser_objects = BudgetUser.objects.filter(user_id=request.user.id)
+    budget_ids = []
+    for i in budgetUser_objects:
+        budget_ids.append(i.budget_id)
+    budgets_list = [Budget.objects.get(id = i.budget_id.id) for i in budgetUser_objects]
+    budget = Budget.objects.get(id = budget_id)
+    return render(request, "budget_app/view_budget.html", {'budget': budget, 
+                                                            'base_path':base_path,
+                                                            'budgets_list': budgets_list})

@@ -33,8 +33,9 @@
         </div>       
     </nav> 
     
-    {% block sidenav %}
+    
         <div class = 'sidenav'>
+            
             <div class = 'app_title' style="padding-top: 20px;">
                 <h4>BudgetApp</h4>
             </div>
@@ -54,13 +55,17 @@
                     </div>
                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            <ul>
+                                {% for i in budgets_list %}
+                                <li><a href = '/budgets/{{i.id}}'>{{i.name}}</a></li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
             
-        
+            {% block sidenav %}
             <div class = 'sidenav_element'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 15 15">
                     <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
@@ -110,8 +115,9 @@
                 {% endif %}
             </div> -->
 
+        {% endblock %}
         </div>
-    {% endblock %}
+    
     <div id="content", name = "content", class = "main" style = "overflow:visible;">
         <div class = 'row justify-content-center'>
             <div class = 'col-11 row justify-content-center' style = "border-style: hidden; background-color: white;border-radius: 10px;">
