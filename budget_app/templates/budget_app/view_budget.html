@@ -49,7 +49,11 @@
                 <ul>
                     {% for i in categories %}
                         {% if i.name != "Expense" and i.name != "Income" %}
-                            <li><a href = '/budgets/{{budget.id}}/category/{{i.id}}'>{{i.name}}</a></li>
+                            {% if owner_or_edit %}
+                                <li><a href = '/budgets/{{budget.id}}/category/{{i.id}}/edit/'>{{i.name}}</a></li>
+                            {% else %}
+
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </ul>

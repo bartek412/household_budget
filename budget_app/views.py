@@ -7,6 +7,8 @@ from .models import BudgetUser, Budget, Category
 from django.contrib.auth.models import User  # importowanie domyslej tabeli userow
 from django.db.models import Q
 from enum import Enum
+from django.contrib.auth.decorators import login_required
+
 
 Role = Enum('Role', 'OWNER EDIT VIEW')
 
@@ -28,24 +30,25 @@ def if_can_edit(budget_id, request):
     else:
         return False
 
+@login_required(login_url='login')
 # Create your views here.
 def base(request):
     budgets_list = get_budget_list(request)
     return render(request, "budget_app/base.html", {'budgets_list': budgets_list})
 
-
+@login_required(login_url='login')
 def home(request, base_path=base_path):
     return render(request, "budget_app/home.html", {'base_path': base_path})
 
-
+@login_required(login_url='login')
 def register(request, base_path=base_path):
     return render(request, "budget_app/register.html", {'base_path': base_path})
 
-
+@login_required(login_url='login')
 def test_base(request):
     return render(request, "budget_app/test_base.html")
 
-
+@login_required(login_url='login')
 def add_budget(request, base_path=base_path):
     form = BudgetForm(request.POST)
     if request.method == 'POST':
@@ -57,7 +60,7 @@ def add_budget(request, base_path=base_path):
 
     return render(request, "budget_app/add_budget.html", {'form': form, 'base_path': base_path})
 
-
+@login_required(login_url='login')
 def add_category(request, budget_id, base_path=base_path, budget_base_path=budget_base_path):
     parent_categories = Category.objects.filter(budget_id = budget_id)
     if request.method == "POST":
@@ -81,27 +84,30 @@ def add_category(request, budget_id, base_path=base_path, budget_base_path=budge
                                                             'owner_or_edit':owner_or_edit,
                                                             'budget':budget})
 
-
-def edit_category(request, base_path=base_path):
-    # pobranie kategorii ze wszystkich budzetow w ktorych uzytkownik posiada prawa edycji
-    budgets = BudgetUser.objects.filter(user_id=request.user.id, role=1)  # zakładam, że 1 oznacza mozliwosc edycji
-    categories = []
-    for i in budgets:
-        for j in Category.objects.filter(budget_id=i.budget_id): # kategorie bez parent_id
-            categories.append(j)
-    categories = categories[2:]  # dwie pierwsze kategorie to Expense i Income
+@login_required(login_url='login')
+def edit_category(request, budget_id, category_id, base_path=base_path, budget_base_path =  budget_base_path,):
 
     if request.method == "POST":
-        category = Category.objects.get(id=request.POST['category'])
+        category = Category.objects.get(id=category_id)
         if request.POST['name'] != '' or request.POST['name'] != category.name:
             category.name = request.POST['name']
         if request.POST['description'] != '' or request.POST['description'] != category.description:
             category.description = request.POST['description']
         category.save()
-
-    return render(request, "budget_app/edit_category.html", {'base_path': base_path, 'categories': categories})
-
-
+    budgets_list = get_budget_list(request)
+    categories = Category.objects.filter(budget_id = budget_id)
+    owner_or_edit = if_can_edit(budget_id, request)
+    budget = Budget.objects.get(id = budget_id)
+    category = Category.objects.get(id = category_id)
+    return render(request, "budget_app/edit_category.html", {'base_path': base_path, 
+                                                            'categories': categories,
+                                                            'budget_base_path': budget_base_path,
+                                                            'budgets_list':budgets_list,
+                                                            'owner_or_edit': owner_or_edit,
+                                                            'budget':budget,
+                                                            'category':category
+                                                            })
+@login_required(login_url='login')
 # Funkcja dodająca budżet z formularza
 def add_budget(request, base_path=base_path):
 
@@ -141,7 +147,7 @@ def add_budget(request, base_path=base_path):
 
     return render(request, "budget_app/add_budget.html", {'base_path': base_path,
                                                           'users': users})
-
+@login_required(login_url='login')
 def view_budget(request, budget_id, base_path=base_path):
     budgets_list = get_budget_list(request)
     budget = Budget.objects.get(id = budget_id)
@@ -152,7 +158,7 @@ def view_budget(request, budget_id, base_path=base_path):
                                                             'budgets_list': budgets_list,
                                                             'categories': categories,
                                                             'owner_or_edit': owner_or_edit})
-
+@login_required(login_url='login')
 def view_category(request, budget_id, category_id, base_path = base_path):
     budget = Budget.objects.get(id = budget_id)
     budgets_list = get_budget_list(request)
