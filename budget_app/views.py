@@ -1,20 +1,36 @@
 from django.shortcuts import render, HttpResponse
 from os import path
+
+from psutil import users
 from .forms import BudgetForm
 from .models import BudgetUser, Budget, Category
 from django.contrib.auth.models import User  # importowanie domyslej tabeli userow
 from django.db.models import Q
+from enum import Enum
+
+Role = Enum('Role', 'OWNER EDIT VIEW')
 
 base_path = path.join('budget_app', 'base.html')
+budget_base_path = path.join('budget_app', 'view_budget.html')
 
-
-# Create your views here.
-def base(request):
+def get_budget_list(request):
     budgetUser_objects = BudgetUser.objects.filter(user_id=request.user.id)
     budget_ids = []
     for i in budgetUser_objects:
         budget_ids.append(i.budget_id)
     budgets_list = [Budget.objects.get(id = i.budget_id.id) for i in budgetUser_objects]
+    return budgets_list
+
+def if_can_edit(budget_id, request):
+    role = BudgetUser.objects.get(budget_id = budget_id, user_id = request.user.id).role
+    if Role(role).name == "OWNER" or Role(role).name == "EDIT":
+        return True
+    else:
+        return False
+
+# Create your views here.
+def base(request):
+    budgets_list = get_budget_list(request)
     return render(request, "budget_app/base.html", {'budgets_list': budgets_list})
 
 
@@ -42,31 +58,28 @@ def add_budget(request, base_path=base_path):
     return render(request, "budget_app/add_budget.html", {'form': form, 'base_path': base_path})
 
 
-def add_category(request, base_path=base_path):
-    budgetUser_objects = BudgetUser.objects.filter(user_id=request.user.id)
-    budget_ids = []
-    for i in budgetUser_objects:
-        budget_ids.append(i.budget_id)
-    budgets = []
-    for i in budget_ids:
-        budgets.append(Budget.objects.get(id=i.id))
-
-    parent_categories = Category.objects.all()[:2]
-
+def add_category(request, budget_id, base_path=base_path, budget_base_path=budget_base_path):
+    parent_categories = Category.objects.filter(budget_id = budget_id)
     if request.method == "POST":
         # w odpowiedz post zwracany jest slownik z wartosciami z forma-a z template'u 'add_category'
         # klucze w slowniku sa nazwami pol z template'u
         name = request.POST['name']
         description = request.POST['description']
         parent_id = request.POST['parent_id']
-        budget_id = request.POST['budget_id']
-
         c = Category(name=name, description=description, parent_id=Category.objects.get(id=parent_id),
                      budget_id=Budget.objects.get(id=budget_id))
         c.save()
-
+    budgets_list = get_budget_list(request)
+    categories = Category.objects.filter(budget_id = budget_id)
+    owner_or_edit = if_can_edit(budget_id, request)
+    budget = Budget.objects.get(id = budget_id)
     return render(request, "budget_app/add_category.html", {'base_path': base_path,
-                                                            'budgets': budgets, 'parent_categories': parent_categories})
+                                                            'parent_categories': parent_categories,
+                                                            'budget_base_path': budget_base_path,
+                                                            'budgets_list':budgets_list,
+                                                            'categories':categories,
+                                                            'owner_or_edit':owner_or_edit,
+                                                            'budget':budget})
 
 
 def edit_category(request, base_path=base_path):
@@ -130,12 +143,28 @@ def add_budget(request, base_path=base_path):
                                                           'users': users})
 
 def view_budget(request, budget_id, base_path=base_path):
-    budgetUser_objects = BudgetUser.objects.filter(user_id=request.user.id)
-    budget_ids = []
-    for i in budgetUser_objects:
-        budget_ids.append(i.budget_id)
-    budgets_list = [Budget.objects.get(id = i.budget_id.id) for i in budgetUser_objects]
+    budgets_list = get_budget_list(request)
     budget = Budget.objects.get(id = budget_id)
+    categories = Category.objects.filter(budget_id = budget_id)
+    owner_or_edit = if_can_edit(budget_id, request)
     return render(request, "budget_app/view_budget.html", {'budget': budget, 
                                                             'base_path':base_path,
-                                                            'budgets_list': budgets_list})
+                                                            'budgets_list': budgets_list,
+                                                            'categories': categories,
+                                                            'owner_or_edit': owner_or_edit})
+
+def view_category(request, budget_id, category_id, base_path = base_path):
+    budget = Budget.objects.get(id = budget_id)
+    budgets_list = get_budget_list(request)
+    categories = Category.objects.filter(budget_id = budget_id)
+    category = Category.objects.get(id = category_id)
+    owner_or_edit = if_can_edit(budget_id, request)
+    return render(request, "budget_app/view_category.html", {'category':category,
+                                                            'base_path': base_path,
+                                                            'budgets_list': budgets_list,
+                                                            'categories': categories,
+                                                            'owner_or_edit': owner_or_edit,
+                                                            'budget':budget})
+
+
+
