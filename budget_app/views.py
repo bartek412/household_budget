@@ -99,13 +99,15 @@ def edit_category(request, budget_id, category_id, base_path=base_path, budget_b
     owner_or_edit = if_can_edit(budget_id, request)
     budget = Budget.objects.get(id = budget_id)
     category = Category.objects.get(id = category_id)
+    parent = Category.objects.get(id = category.parent_id.id)
     return render(request, "budget_app/edit_category.html", {'base_path': base_path, 
                                                             'categories': categories,
                                                             'budget_base_path': budget_base_path,
                                                             'budgets_list':budgets_list,
                                                             'owner_or_edit': owner_or_edit,
                                                             'budget':budget,
-                                                            'category':category
+                                                            'category':category,
+                                                            'parent':parent
                                                             })
 @login_required(login_url='login')
 # Funkcja dodająca budżet z formularza
