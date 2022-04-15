@@ -13,12 +13,9 @@ def register(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-        
-        
         return redirect('login')  # po zarejestrowaniu przekierowanie na strone logowania
     else:
         form = RegisterForm()
-
     return render(response, 'register/register.html', {'form':form})
 
 @login_required  #dekorator wymaga zalogowania przed przejsciem na strone 'profile'
