@@ -14,20 +14,23 @@
 .sidenav a{
     text-decoration: none;
     font-size: 15px;
-    color:darkslategray;
     display: block;
     padding-left: 20px;
     padding-top: 5px;
     text-align: center;
-    
+    color:darkslategray
 }
 .sidenav_element:hover a{
-    color:#f1f1f1;
+    color:lightslategray;
     text-decoration: none;
 }
 .sidenav_element:hover svg{
-    fill:#f1f1f1;
+    fill:lightslategray;
 }
+
+.sidenav_element:hover button{
+    color:lightslategray;
+} 
 .main{
     margin-left: 160px;
     padding: 0px 10px;
@@ -55,9 +58,9 @@
     border-radius: 10px;
 
 }
-.sidenav_element:hover{
+/* .sidenav_element:hover{
     background-color: blue;
-}
+} */
 
 .sidenav button{
     text-decoration: none;
