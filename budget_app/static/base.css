@@ -76,3 +76,7 @@
 .sidenav:hover{
     text-decoration: none;
 }
+
+.page_title:hover {
+    color: black;
+}
