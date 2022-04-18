@@ -146,9 +146,11 @@ def add_budget(request, base_path=base_path):
             # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
             bu = BudgetUser(user_id=u, budget_id=b, role=1)
             bu.save()
-
+    budgets_list = get_budget_list(request)
     return render(request, "budget_app/add_budget.html", {'base_path': base_path,
-                                                          'users': users})
+                                                          'users': users,
+                                                          'budgets_list': budgets_list,
+                                                          })
 @login_required(login_url='login')
 def view_budget(request, budget_id, base_path=base_path):
     budgets_list = get_budget_list(request)

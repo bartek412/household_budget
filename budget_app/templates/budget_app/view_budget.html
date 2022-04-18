@@ -16,18 +16,22 @@
     
     <div class="accordion" id="accordionExample">
         <div class="card bg-transparent border-0">
-            <div class="card-header bg-transparent border-0" id="headingOne" style="padding: 0%;">
+            <div class="card-header bg-transparent border-0" style="padding:0%;" id="headingOne">
                 <div class = 'sidenav_element'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list-check" viewBox="0 0 15 15">
                             <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
                         </svg>
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="text-decoration: none;">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
                             Budgets
                         </button>
                 </div>
             </div>
-        
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body" style="padding:10%; padding-top: 0%; padding-bottom: 0%;">
+                    <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
+                        <a class="btn btn-primary w-100" href="/add_budget/" role="button">Add budget</a>
+                    </div>
+                </div>
                 <div class="card-body" style="padding:0%">
                     <ul class="list-group list-group-flush" style="padding-left: 10%; padding-right: 10%;">
                         {% for i in budgets_list %}
@@ -52,9 +56,11 @@
             </div>
         </div>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body" style="padding:0%">
+            <div class="card-body" style="padding:10%; padding-top: 0%; padding-bottom: 0%;">
                 {% if owner_or_edit %}
-                    <a class = "btn btn-link" href = "/budgets/{{budget.id}}/add_category" style="padding-left: 0px; padding-top: 0px;">Add category</a>
+                <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
+                    <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_category" role="button">Add category</a>
+                </div>
                 {% endif %}
                 <ul class="list-group list-group-flush" style="padding-left: 10%; padding-right: 10%;">
                     {% for i in categories %}
