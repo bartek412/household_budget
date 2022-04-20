@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from os import path
 
 from psutil import users
-from .forms import BudgetForm, ExpenseIncomeForm
+from .forms import ExpenseIncomeForm
 from .models import BudgetUser, Budget, Category
 # importowanie domyslej tabeli userow
 from django.contrib.auth.models import User
@@ -56,21 +56,6 @@ def register(request, base_path=base_path):
 @login_required(login_url="login")
 def test_base(request):
     return render(request, "budget_app/test_base.html")
-
-
-# @login_required(login_url="login")
-# def add_budget(request, base_path=base_path):
-#     form = BudgetForm(request.POST)
-#     if request.method == "POST":
-#         form = BudgetForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#     else:
-#         form = BudgetForm()
-
-#     return render(
-#         request, "budget_app/add_budget.html", {"form": form, "base_path": base_path}
-#     )
 
 
 @login_required(login_url="login")
