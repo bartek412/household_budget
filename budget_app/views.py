@@ -4,7 +4,8 @@ from os import path
 from psutil import users
 from .forms import BudgetForm, ExpenseIncomeForm
 from .models import BudgetUser, Budget, Category
-from django.contrib.auth.models import User  # importowanie domyslej tabeli userow
+# importowanie domyslej tabeli userow
+from django.contrib.auth.models import User
 from django.db.models import Q
 from enum import Enum
 from django.contrib.auth.decorators import login_required
@@ -21,12 +22,14 @@ def get_budget_list(request):
     budget_ids = []
     for i in budgetUser_objects:
         budget_ids.append(i.budget_id)
-    budgets_list = [Budget.objects.get(id=i.budget_id.id) for i in budgetUser_objects]
+    budgets_list = [Budget.objects.get(id=i.budget_id.id)
+                    for i in budgetUser_objects]
     return budgets_list
 
 
 def if_can_edit(budget_id, request):
-    role = BudgetUser.objects.get(budget_id=budget_id, user_id=request.user.id).role
+    role = BudgetUser.objects.get(
+        budget_id=budget_id, user_id=request.user.id).role
     if Role(role).name == "OWNER" or Role(role).name == "EDIT":
         return True
     else:
@@ -55,19 +58,19 @@ def test_base(request):
     return render(request, "budget_app/test_base.html")
 
 
-@login_required(login_url="login")
-def add_budget(request, base_path=base_path):
-    form = BudgetForm(request.POST)
-    if request.method == "POST":
-        form = BudgetForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = BudgetForm()
+# @login_required(login_url="login")
+# def add_budget(request, base_path=base_path):
+#     form = BudgetForm(request.POST)
+#     if request.method == "POST":
+#         form = BudgetForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = BudgetForm()
 
-    return render(
-        request, "budget_app/add_budget.html", {"form": form, "base_path": base_path}
-    )
+#     return render(
+#         request, "budget_app/add_budget.html", {"form": form, "base_path": base_path}
+#     )
 
 
 @login_required(login_url="login")
@@ -184,6 +187,18 @@ def add_budget(request, base_path=base_path):
             # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
             bu = BudgetUser(user_id=u, budget_id=b, role=1)
             bu.save()
+        expense = Category(
+            name="Expense",
+            description="test",
+            budget_id=b,
+        )
+        expense.save()
+        income = Category(
+            name="Income",
+            description="test",
+            budget_id=b,
+        )
+        income.save()
     budgets_list = get_budget_list(request)
     return render(
         request,
@@ -236,10 +251,13 @@ def view_category(request, budget_id, category_id, base_path=base_path):
     )
 
 
-def add_income(request, budget_id, base_path=base_path):
-    form = ExpenseIncomeForm(request.POST)
+@login_required(login_url="login")
+def add_income(
+    request, budget_id, base_path=base_path, budget_base_path=budget_base_path
+):
+    form = ExpenseIncomeForm(budget_id, request.POST)
     if request.method == "POST":
-        form = ExpenseIncomeForm(request.POST)
+        form = ExpenseIncomeForm(budget_id, request.POST)
         if form.is_valid():
             income = form.save(commit=False)
             budget = Budget.objects.get(id=budget_id)
@@ -247,10 +265,15 @@ def add_income(request, budget_id, base_path=base_path):
             income.save()
 
     else:
-        form = ExpenseIncomeForm()
+        form = ExpenseIncomeForm(budget_id=budget_id)
 
     return render(
         request,
         "budget_app/add_income.html",
-        {"form": form, "budget_id": budget_id},
+        {
+            "form": form,
+            "budget_id": budget_id,
+            "budget_base_path": budget_base_path,
+            "base_path": base_path,
+        },
     )
