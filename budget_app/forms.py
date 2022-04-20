@@ -1,12 +1,12 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Budget, BudgetUser
+from .models import Budget, BudgetUser, ExpenseIncome
 from django.contrib.auth.models import User
+
 
 class BudgetForm(ModelForm):
     users = forms.ModelMultipleChoiceField(
-        widget=forms.CheckboxSelectMultiple,
-        queryset=User.objects.all()
+        widget=forms.CheckboxSelectMultiple, queryset=User.objects.all()
     )
 
     # role = forms.ModelMultipleChoiceField(
@@ -15,9 +15,10 @@ class BudgetForm(ModelForm):
     # )
     class Meta:
         model = Budget
-        fields = [
-            'name', 'description', 'users'
-        ]
+        fields = ["name", "description", "users"]
 
 
-
+class ExpenseIncomeForm(ModelForm):
+    class Meta:
+        model = ExpenseIncome
+        fields = ["name", "category_id", "description", "date", "amount"]
