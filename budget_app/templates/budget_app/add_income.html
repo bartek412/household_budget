@@ -1,0 +1,8 @@
+{% extends budget_base_path %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+<button class="button" type="submit">zatwierdz</button>
+</form>
+{% endblock %}
