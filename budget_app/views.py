@@ -262,3 +262,31 @@ def add_income(
             "base_path": base_path,
         },
     )
+
+
+@login_required(login_url="login")
+def add_expense(
+    request, budget_id, base_path=base_path, budget_base_path=budget_base_path
+):
+    form = ExpenseIncomeForm(budget_id, False, request.POST)
+    if request.method == "POST":
+        form = ExpenseIncomeForm(budget_id, False, request.POST)
+        if form.is_valid():
+            income = form.save(commit=False)
+            budget = Budget.objects.get(id=budget_id)
+            income.budget_id = budget
+            income.save()
+
+    else:
+        form = ExpenseIncomeForm(budget_id, False)
+
+    return render(
+        request,
+        "budget_app/add_income.html",
+        {
+            "form": form,
+            "budget_id": budget_id,
+            "budget_base_path": budget_base_path,
+            "base_path": base_path,
+        },
+    )

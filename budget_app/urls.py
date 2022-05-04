@@ -21,5 +21,8 @@ urlpatterns = [
         views.view_category,
         name="view_category",
     ),
-    path("budgets/<int:budget_id>/add_income/", views.add_income, name="add_income"),
+    path("budgets/<int:budget_id>/add_income/",
+         views.add_income, name="add_income"),
+    path("budgets/<int:budget_id>/add_expense/",
+         views.add_expense, name="add_expense"),
 ]
