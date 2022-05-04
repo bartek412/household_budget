@@ -263,6 +263,7 @@ def add_income(
         },
     )
 
+<<<<<<< HEAD
 
 @login_required(login_url="login")
 def add_expense(
@@ -288,5 +289,39 @@ def add_expense(
             "budget_id": budget_id,
             "budget_base_path": budget_base_path,
             "base_path": base_path,
+=======
+# Dodawanie istniejacego uzytkownika do budzetu
+@login_required(login_url="login")
+def add_user(
+    request, budget_id, base_path=base_path, budget_base_path=budget_base_path
+):
+    users_objects = User.objects.all()
+    users = []
+    for i in users_objects:
+        users.append(i.username)
+
+    if request.method == "POST":
+        users_list = request.POST.getlist("users_list")
+        print(users_list)
+
+        for user in users_list:
+            u = User.objects.get(username=user)
+            # u.save()
+
+            budget_quantity = len(Budget.objects.all()) - 1
+            # Dodanie nazwy budzetu i opisu do tabeli Budget
+            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[budget_quantity], role=1)
+            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
+            bu = BudgetUser(user_id=u, budget_id=budget_id, role=1)
+            bu.save()
+
+    return render(
+        request,
+        "budget_app/add_user.html",
+        {
+            "base_path": base_path,
+            "users": users,
+            "budget_base_path": budget_base_path
+>>>>>>> 56eef1a3634b08184443c71779c336f452bca46e
         },
     )
