@@ -22,11 +22,6 @@
             <label class = "col-sm-2 col-form-label" >Users</label>
             <div class = "col-sm-4"></div>
             <div class="col-sm-6">
-{#                <select name = 'user' id = 'user' style = "width: 150px;" class = "custom-control custom-checkbox">#}
-{#                    {% for i in users %}#}
-{#                        <option value={{ i }}>{{ i }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
                   <div class="custom-control custom-checkbox">
                       {% for i in users %}
                         <input type="checkbox" name="users_list" id='{{ i }}' value='{{ i }}'>
