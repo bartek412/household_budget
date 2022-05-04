@@ -263,7 +263,6 @@ def add_income(
         },
     )
 
-<<<<<<< HEAD
 
 @login_required(login_url="login")
 def add_expense(
@@ -288,9 +287,10 @@ def add_expense(
             "form": form,
             "budget_id": budget_id,
             "budget_base_path": budget_base_path,
-            "base_path": base_path,
-=======
+            "base_path": base_path, })
 # Dodawanie istniejacego uzytkownika do budzetu
+
+
 @login_required(login_url="login")
 def add_user(
     request, budget_id, base_path=base_path, budget_base_path=budget_base_path
@@ -322,6 +322,5 @@ def add_user(
             "base_path": base_path,
             "users": users,
             "budget_base_path": budget_base_path
->>>>>>> 56eef1a3634b08184443c71779c336f452bca46e
         },
     )
