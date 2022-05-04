@@ -9,16 +9,23 @@ import budget_app.models
 class Budget(models.Model):
     name = models.CharField(max_length=30)
     users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through='BudgetUser')
+        settings.AUTH_USER_MODEL, through="BudgetUser")
     description = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
 
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=150)
     parent_id = models.ForeignKey(
-        'self', null=True, blank=True, on_delete=models.CASCADE)
+        "self", null=True, blank=True, on_delete=models.CASCADE
+    )
     budget_id = models.ForeignKey(Budget, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class BudgetUser(models.Model):
@@ -34,5 +41,7 @@ class ExpenseIncome(models.Model):
     description = models.CharField(max_length=150)
     date = models.DateField(default=date.today)
     amount = models.DecimalField(decimal_places=2, max_digits=10)
-    user_id = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    budget_id = models.ForeignKey(Budget, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
