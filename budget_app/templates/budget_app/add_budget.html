@@ -67,4 +67,11 @@
         <button class = "btn btn-primary" type="submit" name = "budget_added" value = "budget_added">Add budget</button>
     </form>
 </div>
+
+{% if added %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal('Budget added succesfully');
+    </script>
+{% endif %}
 {% endblock %}

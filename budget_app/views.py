@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from os import path
 
 from psutil import users
@@ -8,6 +8,7 @@ from .models import BudgetUser, Budget, Category
 from django.contrib.auth.models import User
 from django.db.models import Q
 from enum import Enum
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
@@ -139,7 +140,7 @@ def edit_category(
 @login_required(login_url="login")
 # Funkcja dodająca budżet z formularza
 def add_budget(request, base_path=base_path):
-
+    added = False
     # Tablica z id userów, którzy są zapisani w bazie
     # users_ids = []
     # for i in budgetUser_objects:
@@ -151,6 +152,7 @@ def add_budget(request, base_path=base_path):
         users.append(i.username)
 
     if request.method == "POST":
+        added = True
         # w odpowiedz post zwracany jest slownik z wartosciami z forma-a z template'u 'add_category'
         # klucze w slowniku sa nazwami pol z template'u
         name = request.POST["name"]
@@ -184,6 +186,8 @@ def add_budget(request, base_path=base_path):
             budget_id=b,
         )
         income.save()
+        messages.success(request, 'Budget added succesfully!')
+        return redirect('/budgets/{}/'.format(b.id))
     budgets_list = get_budget_list(request)
     return render(
         request,
@@ -192,6 +196,7 @@ def add_budget(request, base_path=base_path):
             "base_path": base_path,
             "users": users,
             "budgets_list": budgets_list,
+            'added':added
         },
     )
 
