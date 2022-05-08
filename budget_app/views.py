@@ -77,6 +77,7 @@ def add_category(
             budget_id=Budget.objects.get(id=budget_id),
         )
         c.save()
+        messages.success(request, 'Category added successfully')
     budgets_list = get_budget_list(request)
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
@@ -115,6 +116,7 @@ def edit_category(
         ):
             category.description = request.POST["description"]
         category.save()
+        messages.success(request, 'Category edited successfully!')
     budgets_list = get_budget_list(request)
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
@@ -253,7 +255,7 @@ def add_income(
             budget = Budget.objects.get(id=budget_id)
             income.budget_id = budget
             income.save()
-
+        messages.success(request, "Income added successfully!")
     else:
         form = ExpenseIncomeForm(budget_id=budget_id)
 
@@ -281,7 +283,7 @@ def add_expense(
             budget = Budget.objects.get(id=budget_id)
             income.budget_id = budget
             income.save()
-
+            messages.success(request, 'Expense added successfully!')
     else:
         form = ExpenseIncomeForm(budget_id, False)
 
@@ -319,7 +321,7 @@ def add_user(
             # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
             bu = BudgetUser(user_id=u, budget_id=budget_id, role=1)
             bu.save()
-
+        messages.success(request, "User added successfully!")
     return render(
         request,
         "budget_app/add_user.html",

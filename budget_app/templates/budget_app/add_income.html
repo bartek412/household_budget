@@ -5,4 +5,10 @@
     {{ form.as_p }}
 <button class="button" type="submit">zatwierdz</button>
 </form>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% for msg in messages %}
+    <script>
+        swal('{{msg}}');
+    </script>
+{% endfor %}
 {% endblock %}

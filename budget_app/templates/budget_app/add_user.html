@@ -29,4 +29,10 @@
 
     </form>
 </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% for msg in messages %}
+    <script>
+        swal('{{msg}}');
+    </script>
+{% endfor %}
 {% endblock %}
