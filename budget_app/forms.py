@@ -16,3 +16,8 @@ class ExpenseIncomeForm(ModelForm):
     class Meta:
         model = ExpenseIncome
         fields = ["name", "category_id", "description", "date", "amount"]
+
+
+class AddUserForm(forms.Form):
+    name = forms.CharField(label='Username', max_length=30)
+    write = forms.BooleanField(label='write permision', required=False)

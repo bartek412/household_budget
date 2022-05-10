@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, HttpResponse
 from os import path
 
 from psutil import users
-from .forms import ExpenseIncomeForm
+from .forms import ExpenseIncomeForm, AddUserForm
 from .models import BudgetUser, Budget, Category
 # importowanie domyslej tabeli userow
 from django.contrib.auth.models import User
@@ -198,7 +198,7 @@ def add_budget(request, base_path=base_path):
             "base_path": base_path,
             "users": users,
             "budgets_list": budgets_list,
-            'added':added
+            'added': added
         },
     )
 
@@ -261,7 +261,7 @@ def add_income(
 
     return render(
         request,
-        "budget_app/add_income.html",
+        "budget_app/form.html",
         {
             "form": form,
             "budget_id": budget_id,
@@ -289,7 +289,7 @@ def add_expense(
 
     return render(
         request,
-        "budget_app/add_income.html",
+        "budget_app/form.html",
         {
             "form": form,
             "budget_id": budget_id,
@@ -302,32 +302,34 @@ def add_expense(
 def add_user(
     request, budget_id, base_path=base_path, budget_base_path=budget_base_path
 ):
-    users_objects = User.objects.all()
-    users = []
-    for i in users_objects:
-        users.append(i.username)
-
     if request.method == "POST":
-        users_list = request.POST.getlist("users_list")
-        print(users_list)
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            budget = Budget.objects.get(id=budget_id)
+            try:
+                user = User.objects.get(username=form.cleaned_data['name'])
+            except User.DoesNotExist:
+                user = None
+                messages.error(
+                    request, 'User not found')
 
-        for user in users_list:
-            u = User.objects.get(username=user)
-            # u.save()
-
-            budget_quantity = len(Budget.objects.all()) - 1
-            # Dodanie nazwy budzetu i opisu do tabeli Budget
-            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[budget_quantity], role=1)
-            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
-            bu = BudgetUser(user_id=u, budget_id=budget_id, role=1)
-            bu.save()
-        messages.success(request, "User added successfully!")
+            if user:
+                permision = Role['EDIT'].value if form.cleaned_data['write'] else Role['VIEW'].value
+                if not BudgetUser.objects.filter(user_id=user, budget_id=budget):
+                    bu = BudgetUser(
+                        user_id=user, budget_id=budget, role=permision)
+                    bu.save()
+                    messages.success(request, 'User added successfully!')
+                else:
+                    messages.error(
+                        request, 'User is already added')
+    else:
+        form = AddUserForm()
     return render(
         request,
-        "budget_app/add_user.html",
-        {
+        "budget_app/form.html",
+        {"form": form,
             "base_path": base_path,
-            "users": users,
             "budget_base_path": budget_base_path
-        },
+         },
     )
