@@ -173,10 +173,10 @@
         const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: [{% for i in expenseincome %}{{ i.pk }},{% endfor %}],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Amount',
+                data: [{% for i in expenseincome %}{{ i.amount }},{% endfor %}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -210,9 +210,38 @@
 
 {% block content %}
 
-    I am the main page of: {{budget}} with the name of {{budget.name}}
+    <h3>Dashboard od {{budget.name}} budget</h3>
 
 
+
+    <div class="container">
+  <h2 class="text-center"><u>Recent Expenses and Incomes </u></h2><br>
+  <table class="table table-light table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Budget</th>
+        <th>Name</th>
+        <th>PK</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!-- jinja2 Technique -->
+    {% if d %}
+    {% for i in expenseincome %}
+      <tr>
+        <td>{{i.date}}</td>
+        <td>{{i.amount}}</td>
+        <td>{{i.budget_id}}</td>
+        <td>{{i.name}}</td>
+        <td>{{i.pk}}</td>
+      </tr>
+    {% endfor %}
+    {% endif %}
+    </tbody>
+  </table>
+</div>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {% for msg in messages %}

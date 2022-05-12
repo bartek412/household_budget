@@ -1,5 +1,8 @@
+import json
+
 from django.shortcuts import redirect, render, HttpResponse
 from os import path
+import pandas as pd
 
 from psutil import users
 from .forms import ExpenseIncomeForm, AddUserForm
@@ -209,7 +212,10 @@ def view_budget(request, budget_id, base_path=base_path):
     budget = Budget.objects.get(id=budget_id)
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
-    #expenseincome = ExpenseIncome.objects.filter(budget_id=budget_id)
+    expenseincome = ExpenseIncome.objects.filter(budget_id=budget_id)
+    expenseincome_json = pd.DataFrame(expenseincome).reset_index().to_json(orient ='records')
+    data = []
+    data = json.loads(expenseincome_json)
     return render(
         request,
         "budget_app/view_budget.html",
@@ -219,7 +225,9 @@ def view_budget(request, budget_id, base_path=base_path):
             "budgets_list": budgets_list,
             "categories": categories,
             "owner_or_edit": owner_or_edit,
-            #"expenseincome": expenseincome,
+            "expenseincome": expenseincome,
+            "expenseincome_df": expenseincome_json,
+            "d": data,
         },
     )
 
