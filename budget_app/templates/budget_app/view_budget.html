@@ -1,6 +1,7 @@
 {% extends base_path %}
+{% block style %}
 
-{%block style %}
+
 
 <style>
     .sidenav_element:hover button{
@@ -216,18 +217,17 @@
 
     <div class="container">
   <h2 class="text-center"><u>Recent Expenses and Incomes </u></h2><br>
-  <table class="table table-light table-striped">
+  <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Budget</th>
-        <th>Name</th>
-        <th>PK</th>
+        <th class="th-sm">Date</th>
+        <th class="th-sm">Amount</th>
+        <th class="th-sm">Budget</th>
+        <th class="th-sm">Name</th>
+        <th class="th-sm">PK</th>
       </tr>
     </thead>
     <tbody>
-    <!-- jinja2 Technique -->
     {% if d %}
     {% for i in expenseincome %}
       <tr>
@@ -251,6 +251,11 @@
     {% endfor %}
 
     <canvas id="myChart" width="400" height="100"></canvas>
+
+
+<script>
+$('#myTable').DataTable();
+</script>
 
 {% endblock %}
 
