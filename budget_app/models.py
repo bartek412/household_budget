@@ -27,6 +27,15 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def is_income_category(self):
+        category = self
+        while True:
+            if category.parent_id is None:
+                break
+            else:
+                category = Category.objects.get(id=category.parent_id.id)
+        return True if category.name == 'Income' else False
+
 
 class BudgetUser(models.Model):
     user_id = models.ForeignKey(
