@@ -73,11 +73,13 @@ def add_category(
         name = request.POST["name"]
         description = request.POST["description"]
         parent_id = request.POST["parent_id"]
+        income = Category.objects.get(id=parent_id).is_income_category()
         c = Category(
             name=name,
             description=description,
             parent_id=Category.objects.get(id=parent_id),
             budget_id=Budget.objects.get(id=budget_id),
+            income=income
         )
         c.save()
         messages.success(request, 'Category added successfully')
@@ -181,13 +183,14 @@ def add_budget(request, base_path=base_path):
             bu.save()
         expense = Category(
             name="Expense",
-            description="test",
+            description="Base Expense",
             budget_id=b,
+            income=False
         )
         expense.save()
         income = Category(
             name="Income",
-            description="test",
+            description="Base Income",
             budget_id=b,
         )
         income.save()
@@ -213,7 +216,8 @@ def view_budget(request, budget_id, base_path=base_path):
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
     expenseincome = ExpenseIncome.objects.filter(budget_id=budget_id)
-    expenseincome_json = pd.DataFrame(expenseincome).reset_index().to_json(orient ='records')
+    expenseincome_json = pd.DataFrame(
+        expenseincome).reset_index().to_json(orient='records')
     data = []
     data = json.loads(expenseincome_json)
     return render(
@@ -257,9 +261,9 @@ def view_category(request, budget_id, category_id, base_path=base_path):
 def add_income(
     request, budget_id, base_path=base_path, budget_base_path=budget_base_path
 ):
-    form = ExpenseIncomeForm(budget_id, request.POST)
+    form = ExpenseIncomeForm(budget_id, True, request.POST)
     if request.method == "POST":
-        form = ExpenseIncomeForm(budget_id, request.POST)
+        form = ExpenseIncomeForm(budget_id, True, request.POST)
         if form.is_valid():
             income = form.save(commit=False)
             budget = Budget.objects.get(id=budget_id)

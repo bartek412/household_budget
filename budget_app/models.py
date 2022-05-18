@@ -23,6 +23,7 @@ class Category(models.Model):
         "self", null=True, blank=True, on_delete=models.CASCADE
     )
     budget_id = models.ForeignKey(Budget, on_delete=models.CASCADE)
+    income = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
