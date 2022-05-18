@@ -268,10 +268,11 @@ def add_income(
             budget = Budget.objects.get(id=budget_id)
             income.budget_id = budget
             income.save()
-        messages.success(request, "Income added successfully!")
+            messages.success(request, "Income added successfully!")
+            form = ExpenseIncomeForm(budget_id, True)
     else:
         form = ExpenseIncomeForm(budget_id=budget_id)
-
+    budgets_list = get_budget_list(request)
     return render(
         request,
         "budget_app/form.html",
@@ -280,6 +281,7 @@ def add_income(
             "budget_id": budget_id,
             "budget_base_path": budget_base_path,
             "base_path": base_path,
+            "budgets_list": budgets_list,
         },
     )
 
@@ -297,9 +299,10 @@ def add_expense(
             income.budget_id = budget
             income.save()
             messages.success(request, 'Expense added successfully!')
+            form = ExpenseIncomeForm(budget_id, False)
     else:
         form = ExpenseIncomeForm(budget_id, False)
-
+    budgets_list = get_budget_list(request)
     return render(
         request,
         "budget_app/form.html",
@@ -307,8 +310,8 @@ def add_expense(
             "form": form,
             "budget_id": budget_id,
             "budget_base_path": budget_base_path,
-            "base_path": base_path, })
-# Dodawanie istniejacego uzytkownika do budzetu
+            "base_path": base_path,
+            "budgets_list": budgets_list, })
 
 
 @login_required(login_url="login")
