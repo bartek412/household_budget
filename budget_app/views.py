@@ -165,7 +165,6 @@ def add_budget(request, base_path=base_path):
         name = request.POST["name"]
         description = request.POST["description"]
         users_list = request.POST.getlist("users_list")
-        print(name, description, users_list)
 
         # Dodanie nazwy budzetu i opisu do tabeli Budget
         b = Budget(name=name, description=description)
