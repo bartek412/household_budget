@@ -341,10 +341,7 @@ def add_expense(
             "budget_base_path": budget_base_path,
             "base_path": base_path,
             "budgets_list": budgets_list, })
-<<<<<<< HEAD
 # Dodawanie istniejacego uzytkownika do budzetu
-=======
->>>>>>> 92c061b474c65207015d9d739d93f050c764a8a4
 
 
 @login_required(login_url="login")
