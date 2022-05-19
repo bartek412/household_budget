@@ -171,6 +171,9 @@
     <script>
     $(document).ready(function () {
         const ctx = document.getElementById('Expense').getContext('2d');
+        const labels = [{% for i in expense_cat %} "{{ i }}", {% endfor %}];
+        const dates = [{% for i in expenseincome.date %} "{{ i }}", {% endfor %}];
+        console.log(dates);
         const Expense = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -199,9 +202,11 @@
         },
         options: {
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
         }
     });
@@ -237,9 +242,11 @@
         },
         options: {
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
         }
     });
@@ -290,7 +297,11 @@
 
     <!-- <canvas id="myChart" width="400" height="100"></canvas> -->
     <canvas id="Expense" width="400" height="100"></canvas>
+    <input onchange="filterData()" type="date" id="startdate" value="2022-05-05">
+    <input onchange="filterData()" type="date" id="edndate" value="2022-05-10">
     <canvas id="Income" width="400" height="100"></canvas>
+
+
 
 <script>
 $('#myTable').DataTable();
