@@ -260,22 +260,24 @@
   <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
     <thead>
       <tr>
-        <th class="th-sm">Date</th>
-        <th class="th-sm">Amount</th>
-        <th class="th-sm">Budget</th>
         <th class="th-sm">Name</th>
-        <th class="th-sm">PK</th>
+        <th class="th-sm">Amount</th>
+        <th class="th-sm">Date</th>
+        <th class="th-sm">Category</th>
       </tr>
     </thead>
     <tbody>
     {% if d %}
     {% for i in expenseincome %}
       <tr>
-        <td>{{i.date}}</td>
-        <td>{{i.amount}}</td>
-        <td>{{i.budget_id}}</td>
         <td>{{i.name}}</td>
-        <td>{{i.pk}}</td>
+        {% if i.category_id.is_income_category %}
+            <td style="color:green">{{i.amount}}</td>
+        {% else %}
+            <td style="color:red">{{i.amount}}</td>
+        {% endif %}
+        <td>{{i.date}}</td>
+        <td>{{i.category_id}}</td>
       </tr>
     {% endfor %}
     {% endif %}
