@@ -100,16 +100,10 @@
                 </div>
                 {% endif %}
                 <ul class="list-group list-group-flush" style="padding-left: 10%; padding-right: 10%;">
-                    {% for i in categories %}
-                        {% if i.name != "Expense" and i.name != "Income" %}
-                            {% if owner_or_edit %}
+                    {% for i in users %}
                             <li class="list-group-item" style="padding: 0.25rem 0.5rem; background-color: rgb(228, 243, 255);">
-                                    <a href = '/budgets/{{budget.id}}/category/{{i.id}}/edit/' style="padding-left: 0px; padding-top: 0px; font-size:13px;">{{i.name}}</a>
+                                    {{i}}
                                 </li>
-                            {% else %}
-
-                            {% endif %}
-                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
@@ -202,11 +196,13 @@
         },
         options: {
             scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+                y: {
+                    beginAtZero: true
+                },
+                title: {
+                    display: true,
+                    text: 'Expense'
+                }
             }
         }
     });
@@ -242,11 +238,21 @@
         },
         options: {
             scales: {
+<<<<<<< HEAD
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
                     }
                 }]
+=======
+                y: {
+                    beginAtZero: true
+                },
+                title: {
+                    display: true,
+                    text: 'Income'
+                }
+>>>>>>> a8c722c0af90821e0d63d4139c05e12a8e426f5b
             }
         }
     });
@@ -256,31 +262,33 @@
 
 {% block content %}
 
-    <h3>Dashboard od {{budget.name}} budget</h3>
+    <h2 style="margin-top:2%;">{{budget.name}} Dashboard</h2>
 
 
 
     <div class="container">
-  <h2 class="text-center"><u>Recent Expenses and Incomes </u></h2><br>
+  <h4><u>Recent Expenses and Incomes </u></h4><br>
   <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
     <thead>
       <tr>
-        <th class="th-sm">Date</th>
-        <th class="th-sm">Amount</th>
-        <th class="th-sm">Budget</th>
         <th class="th-sm">Name</th>
-        <th class="th-sm">PK</th>
+        <th class="th-sm">Amount</th>
+        <th class="th-sm">Date</th>
+        <th class="th-sm">Category</th>
       </tr>
     </thead>
     <tbody>
     {% if d %}
     {% for i in expenseincome %}
       <tr>
-        <td>{{i.date}}</td>
-        <td>{{i.amount}}</td>
-        <td>{{i.budget_id}}</td>
         <td>{{i.name}}</td>
-        <td>{{i.pk}}</td>
+        {% if i.category_id.is_income_category %}
+            <td style="color:green">{{i.amount}}</td>
+        {% else %}
+            <td style="color:red">{{i.amount}}</td>
+        {% endif %}
+        <td>{{i.date}}</td>
+        <td>{{i.category_id}}</td>
       </tr>
     {% endfor %}
     {% endif %}

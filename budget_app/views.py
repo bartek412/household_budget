@@ -30,6 +30,13 @@ def get_budget_list(request):
                     for i in budgetUser_objects]
     return budgets_list
 
+def get_user_list(budget_id):
+    budgetUser_objects = BudgetUser.objects.filter(budget_id=budget_id)
+    users = []
+    for i in budgetUser_objects:
+        print(i.user_id.id)
+        users.append(User.objects.get(id=i.user_id.id))
+    return users
 
 def if_can_edit(budget_id, request):
     role = BudgetUser.objects.get(
@@ -213,6 +220,7 @@ def add_budget(request, base_path=base_path):
 
 @login_required(login_url="login")
 def view_budget(request, budget_id, base_path=base_path):
+    users = get_user_list(budget_id)
     budgets_list = get_budget_list(request)
     budget = Budget.objects.get(id=budget_id)
     categories = Category.objects.filter(budget_id=budget_id)
@@ -242,8 +250,7 @@ def view_budget(request, budget_id, base_path=base_path):
 
     income_amt, income_cat = [float(i) for i in list(incomes['amount'].values)], list(incomes['amount'].keys())
     expense_amt, expense_cat = [float(i) for i in list(expenses['amount'].values)], list(expenses['amount'].keys())
-    print(income_amt)
-    print(income_cat)
+
     return render(
         request,
         "budget_app/view_budget.html",
@@ -259,7 +266,8 @@ def view_budget(request, budget_id, base_path=base_path):
             "income_amt":income_amt,
             "income_cat":income_cat,
             "expense_amt":expense_amt,
-            "expense_cat":expense_cat
+            "expense_cat":expense_cat,
+            "users":users
         },
     )
 
