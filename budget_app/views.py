@@ -96,7 +96,7 @@ def add_category(
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
     budget = Budget.objects.get(id=budget_id)
-
+    users = get_user_list(budget_id)
     return render(
         request,
         "budget_app/add_category.html",
@@ -108,6 +108,7 @@ def add_category(
             "categories": categories,
             "owner_or_edit": owner_or_edit,
             "budget": budget,
+            "users":users
         },
     )
 
@@ -138,6 +139,7 @@ def edit_category(
     budget = Budget.objects.get(id=budget_id)
     category = Category.objects.get(id=category_id)
     parent = Category.objects.get(id=category.parent_id.id)
+    users = get_user_list(budget_id)
     return render(
         request,
         "budget_app/edit_category.html",
@@ -150,6 +152,7 @@ def edit_category(
             "budget": budget,
             "category": category,
             "parent": parent,
+            "users":users
         },
     )
 
@@ -213,7 +216,7 @@ def add_budget(request, base_path=base_path):
             "base_path": base_path,
             "users": users,
             "budgets_list": budgets_list,
-            'added': added
+            'added': added,
         },
     )
 
@@ -224,8 +227,12 @@ def view_budget(request, budget_id, base_path=base_path):
     budgets_list = get_budget_list(request)
     budget = Budget.objects.get(id=budget_id)
     categories = Category.objects.filter(budget_id=budget_id)
-    owner_or_edit = if_can_edit(budget_id, request)
+    try:
+        owner_or_edit = if_can_edit(budget_id, request)
+    except:
+        owner_or_edit = True
     expenseincome = ExpenseIncome.objects.filter(budget_id=budget_id)
+
     expenseincome_json = pd.DataFrame(
         expenseincome).reset_index().to_json(orient='records')
     data = []
@@ -310,6 +317,10 @@ def add_income(
     else:
         form = ExpenseIncomeForm(budget_id=budget_id)
     budgets_list = get_budget_list(request)
+    users = get_user_list(budget_id)
+    owner_or_edit = if_can_edit(budget_id, request)
+    categories = Category.objects.filter(budget_id=budget_id)
+    budget = Budget.objects.get(id=budget_id)
     return render(
         request,
         "budget_app/form.html",
@@ -319,6 +330,10 @@ def add_income(
             "budget_base_path": budget_base_path,
             "base_path": base_path,
             "budgets_list": budgets_list,
+            "users":users,
+            "owner_or_edit": owner_or_edit,
+            "categories":categories,
+            "budget":budget
         },
     )
 
@@ -339,7 +354,11 @@ def add_expense(
             form = ExpenseIncomeForm(budget_id, False)
     else:
         form = ExpenseIncomeForm(budget_id, False)
+    users = get_user_list(budget_id)
     budgets_list = get_budget_list(request)
+    owner_or_edit = if_can_edit(budget_id, request)
+    categories = Category.objects.filter(budget_id=budget_id)
+    budget = Budget.objects.get(id=budget_id)
     return render(
         request,
         "budget_app/form.html",
@@ -348,7 +367,11 @@ def add_expense(
             "budget_id": budget_id,
             "budget_base_path": budget_base_path,
             "base_path": base_path,
-            "budgets_list": budgets_list, })
+            "budgets_list": budgets_list,
+            "users":users,
+            "owner_or_edit": owner_or_edit,
+            "categories":categories,
+            "budget":budget })
 # Dodawanie istniejacego uzytkownika do budzetu
 
 
@@ -380,6 +403,10 @@ def add_user(
     else:
         form = AddUserForm()
     budgets_list = get_budget_list(request)
+    categories = Category.objects.filter(budget_id=budget_id)
+    owner_or_edit = if_can_edit(budget_id, request)
+    users = get_user_list(budget_id)
+    budget = Budget.objects.get(id=budget_id)
     return render(
         request,
         "budget_app/form.html",
@@ -387,5 +414,9 @@ def add_user(
             "base_path": base_path,
             "budget_base_path": budget_base_path,
             "budgets_list": budgets_list,
+            "categories":categories,
+            "owner_or_edit": owner_or_edit,
+            "users":users,
+            "budget":budget
          },
     )
