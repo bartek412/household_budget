@@ -100,16 +100,10 @@
                 </div>
                 {% endif %}
                 <ul class="list-group list-group-flush" style="padding-left: 10%; padding-right: 10%;">
-                    {% for i in categories %}
-                        {% if i.name != "Expense" and i.name != "Income" %}
-                            {% if owner_or_edit %}
+                    {% for i in users %}
                             <li class="list-group-item" style="padding: 0.25rem 0.5rem; background-color: rgb(228, 243, 255);">
-                                    <a href = '/budgets/{{budget.id}}/category/{{i.id}}/edit/' style="padding-left: 0px; padding-top: 0px; font-size:13px;">{{i.name}}</a>
+                                    {{i}}
                                 </li>
-                            {% else %}
-
-                            {% endif %}
-                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
@@ -201,6 +195,10 @@
             scales: {
                 y: {
                     beginAtZero: true
+                },
+                title: {
+                    display: true,
+                    text: 'Expense'
                 }
             }
         }
@@ -239,6 +237,10 @@
             scales: {
                 y: {
                     beginAtZero: true
+                },
+                title: {
+                    display: true,
+                    text: 'Income'
                 }
             }
         }
@@ -249,12 +251,12 @@
 
 {% block content %}
 
-    <h3>Dashboard od {{budget.name}} budget</h3>
+    <h2 style="margin-top:2%;">{{budget.name}} Dashboard</h2>
 
 
 
     <div class="container">
-  <h2 class="text-center"><u>Recent Expenses and Incomes </u></h2><br>
+  <h4><u>Recent Expenses and Incomes </u></h4><br>
   <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
     <thead>
       <tr>
