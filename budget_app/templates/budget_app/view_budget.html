@@ -247,10 +247,13 @@ var table = $('#myTable').dataTable( {
         var expense_values = $.map(expense_cat, function(value, key) { return value });
         var expense_keys = $.map(expense_cat, function(value, key) { return key });
 
+        if (typeof(this.Income) != "undefined") {
+            this.Income.destroy();
+        }
 
     
             const ctx = document.getElementById('Income').getContext('2d');
-            const Income = new Chart(ctx, {
+            this.Income = new Chart(ctx, {
     
             type: 'bar',
             data: {
@@ -302,9 +305,11 @@ var table = $('#myTable').dataTable( {
         });
 
         const ctx2 = document.getElementById('Expense').getContext('2d');
-        const labels = expense_keys;
-        const dates = expense_values;
-        const Expense = new Chart(ctx2, {
+
+        if (typeof(this.Expense) != "undefined") {
+            this.Expense.destroy();
+        }
+        this.Expense = new Chart(ctx2, {
         type: 'bar',
         data: {
             labels: expense_keys,
@@ -354,6 +359,7 @@ var table = $('#myTable').dataTable( {
     }
         }
     });
+    this.Expense.update()
 
     }
 } )
