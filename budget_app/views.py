@@ -163,10 +163,6 @@ def edit_category(
 # Funkcja dodająca budżet z formularza
 def add_budget(request, base_path=base_path):
     added = False
-    # Tablica z id userów, którzy są zapisani w bazie
-    # users_ids = []
-    # for i in budgetUser_objects:
-    #     users_ids.append(i.user_id)
 
     users_objects = User.objects.all()
     users = []
@@ -175,8 +171,6 @@ def add_budget(request, base_path=base_path):
 
     if request.method == "POST":
         added = True
-        # w odpowiedz post zwracany jest slownik z wartosciami z forma-a z template'u 'add_category'
-        # klucze w slowniku sa nazwami pol z template'u
         name = request.POST["name"]
         description = request.POST["description"]
         users_list = request.POST.getlist("users_list")
