@@ -95,11 +95,17 @@ table.dataTable thead .sorting_desc_disabled:before {
   bottom: .5em;
 }
 
-.date-range-filter{
+.date-range-filter,
+.dataTables_wrapper .dataTables_filter input{
     font-size: 15px;
-    float: right;
     font-family: Roboto, sans-serif;
-    clear: both;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: lightgrey;
+    border: 1px solid lightgrey;
+    margin-right: 25px;
+    margin-left: 5px;
+    margin-top: 5px;
 }
 
 .expense,
@@ -117,3 +123,18 @@ table.dataTable thead .sorting_desc_disabled:before {
     padding: 10px;
     border-radius: 15px;
 }
+
+.inputFrame{
+    clear: left;
+    float: right;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: transparent;
+    padding: 4px;
+    color: lightgrey;
+}
+
