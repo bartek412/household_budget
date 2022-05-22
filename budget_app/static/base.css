@@ -94,3 +94,14 @@ table.dataTable thead .sorting_desc_disabled:before {
   bottom: .5em;
 }
 
+.date-range-filter{
+    font-size: 15px;
+    float: right;
+    font-family: Roboto, sans-serif;
+}
+
+.expense,
+.income {
+    text-align: right;
+}
+

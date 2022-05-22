@@ -178,18 +178,18 @@
   type="date"
   id="min"
   class="date-range-filter"
-  placeholder="From: yyyy-mm-dd">
+  placeholder="Start date">
 
 <input 
   type="date"
   id="max" 
   class="date-range-filter"
-  placeholder="To: yyyy-mm-dd">
+  placeholder="End date">
   <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
     <thead>
       <tr>
         <th class="th-sm">Name</th>
-        <th class="th-sm">Amount</th>
+        <th class="th-sm" style="text-align: right">Amount</th>
         <th class="th-sm">Date</th>
         <th class="th-sm">Category</th>
         <th class="th-sm">Income</th>
@@ -254,6 +254,8 @@
             };
             
             return false;
+
+
 
         });
 
