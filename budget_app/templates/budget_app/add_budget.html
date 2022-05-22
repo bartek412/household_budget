@@ -56,18 +56,25 @@
             <label class = "col-sm-2 col-form-label" >Users</label>
             <div class = "col-sm-4"></div>
             <div class="col-sm-6">
-                  <div class="custom-control custom-checkbox">
+                  <select id="selectuser"  name="users_list">
+                      <option selected disabled = "true">-- Select Users --</option>
                       {% for i in users %}
-                        <input type="checkbox" name="users_list" id='{{ i }}' value='{{ i }}'>
-                        <label for='{{ i }}'>{{ i }}</label><br>
+                      <option>{{ i }}</option>
                       {% endfor %}
-                  </div>
+                  </select>
             </div>
         </div>
         <button class = "btn btn-primary" type="submit" name = "budget_added" value = "budget_added">Add budget</button>
     </form>
 </div>
 
+
+
+<script>
+$(document).ready(function(){
+    $('#selectuser').select2();
+});
+</script>
 {% if added %}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>

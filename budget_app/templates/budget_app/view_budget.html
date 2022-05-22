@@ -172,6 +172,19 @@
 
     <div class="container">
   <h4><u>Recent Expenses and Incomes </u></h4><br>
+
+
+  <input 
+  type="text" 
+  id="min"
+  class="date-range-filter"
+  placeholder="From: yyyy-mm-dd">
+
+<input 
+  type="text" 
+  id="max" 
+  class="date-range-filter"
+  placeholder="To: yyyy-mm-dd">
   <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
     <thead>
       <tr>
@@ -218,7 +231,39 @@
 
 
 <script>
-    $('#myTable').dataTable({
+    
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var FilterStart = $('#min').val();
+            var FilterEnd = $('#max').val();
+            var DataTable = Date.parse(data[2].trim());
+
+            if (FilterStart == '') {
+                if(FilterEnd == '') {
+                    return true;
+                }
+                if(DataTable <= Date.parse(FilterEnd)){
+                    return true;
+                }
+            };
+            if(FilterEnd == ''){
+                if(DataTable >= Date.parse(FilterStart)){
+                    return true;
+                }
+            };
+
+            if(DataTable >= Date.parse(FilterStart) && DataTable <= Date.parse(FilterEnd)){
+                return true;
+            };
+            
+            return false;
+
+        });
+
+
+
+
+    Table = $('#myTable').dataTable({
         "columns": [
             null,
             null,
@@ -385,6 +430,11 @@
 
         }
     })
+
+    $('.date-range-filter').change( function() {
+        Table.fnDraw();
+    } );
+
 </script>
 
 {% endblock %}
