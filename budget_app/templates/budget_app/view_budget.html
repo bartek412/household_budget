@@ -19,8 +19,8 @@
         <div class="card bg-transparent border-0">
             <div class="card-header bg-transparent border-0" style="padding:0%;" id="headingOne">
                 <div class = 'sidenav_element'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list-check" viewBox="0 0 15 15">
-                            <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h3v2H6zm4 0v-2h3v1a1 1 0 0 1-1 1h-2zm3-3h-3v-2h3v2zm-7 0v-2h3v2H6z"/>
                         </svg>
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
                             Budgets
@@ -48,8 +48,8 @@
     <div class="card bg-transparent border-0">
         <div class="card-header bg-transparent border-0" id="headingTwo" style="padding:0%; height: 74.5px;">
             <div class = 'sidenav_element'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 15 15">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-list-check" viewBox="0 0 15 15">
+                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
                     </svg>
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="text-decoration: none;">
                         Categories
@@ -58,11 +58,11 @@
         </div>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body" style="padding:10%; padding-top: 0%; padding-bottom: 0%;">
-                {% if owner_or_edit %}
+                <!-- {% if owner_or_edit %} -->
                 <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
                     <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_category" role="button">Add category</a>
                 </div>
-                {% endif %}
+                <!-- {% endif %} -->
                 <ul class="list-group list-group-flush" style="padding-left: 10%; padding-right: 10%;">
                     {% for i in categories %}
                         {% if i.name != "Expense" and i.name != "Income" %}
@@ -115,9 +115,9 @@
     <div class="card bg-transparent border-0">
         <div class="card-header bg-transparent border-0" id="headingTwo" style="padding:0%; height: 74.5px;">
             <div class = 'sidenav_element'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 15 15">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 15 15">
+                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                      </svg>
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_income" aria-expanded="false" aria-controls="collapseTwo" style="text-decoration: none;">
                         Incomes
                     </button>
@@ -138,8 +138,8 @@
 <div class="card bg-transparent border-0">
     <div class="card-header bg-transparent border-0" id="headingTwo" style="padding:0%; height: 74.5px;">
         <div class = 'sidenav_element'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 15 15">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                    <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
                 </svg>
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_expense" aria-expanded="false" aria-controls="collapseTwo" style="text-decoration: none;">
                     Expenses
@@ -161,100 +161,8 @@
 
 {% endblock %}
 
-{% block scripts %}
-    <script>
-    $(document).ready(function () {
-        const ctx = document.getElementById('Expense').getContext('2d');
-        const labels = [{% for i in expense_cat %} "{{ i }}", {% endfor %}];
-        const dates = [{% for i in expenseincome.date %} "{{ i }}", {% endfor %}];
-        console.log(dates);
-        const Expense = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [{% for i in expense_cat %} "{{ i }}", {% endfor %}],
-            datasets: [{
-                label: 'Expenses',
-                data: [{% for i in expense_amt %}{{ i }}, {% endfor %}],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                title: {
-                    display: true,
-                    text: 'Expense'
-                }
-            }
-        }
-    });
-    });
 
-    $(document).ready(function () {
-        const ctx = document.getElementById('Income').getContext('2d');
-        const Income = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [{% for i in income_cat %} "{{ i }}", {% endfor %}],
-            datasets: [{
-                //label: 'Incoooomes',
-                data: [{% for i in income_amt %}{{ i }}, {% endfor %}],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                title: {
-                    display: true,
-                    text: 'Income'
-                }
-            }
-        }
-    });
-    });
-    </script>
-{% endblock %}
+
 
 {% block content %}
 
@@ -271,6 +179,7 @@
         <th class="th-sm">Amount</th>
         <th class="th-sm">Date</th>
         <th class="th-sm">Category</th>
+        <th class="th-sm">Income</th>
       </tr>
     </thead>
     <tbody>
@@ -279,17 +188,22 @@
       <tr>
         <td>{{i.name}}</td>
         {% if i.category_id.is_income_category %}
-            <td style="color:green">{{i.amount}}</td>
+            <td class="income" style="color:green">{{i.amount}}</td>
         {% else %}
-            <td style="color:red">{{i.amount}}</td>
+            <td class="expense" style="color:red">{{i.amount}}</td>
         {% endif %}
         <td>{{i.date}}</td>
         <td>{{i.category_id}}</td>
+        <td>{{i.category_id.is_income_category}}</td>
       </tr>
     {% endfor %}
     {% endif %}
     </tbody>
   </table>
+  <h4 class="allign-center">Expenses</h4>
+  <canvas id="Expense" width="400" height="100"></canvas>
+  <h4 class="allign-center">Income</h4>
+  <canvas id="Income" width="400" height="100"></canvas>
 </div>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -299,18 +213,180 @@
         </script>
     {% endfor %}
 
-    <!-- <canvas id="myChart" width="400" height="100"></canvas> -->
-    <canvas id="Expense" width="400" height="100"></canvas>
-    <canvas id="Income" width="400" height="100"></canvas>
+
 
 
 
 <script>
-$('#myTable').DataTable();
+    $('#myTable').dataTable({
+        "columns": [
+            null,
+            null,
+            null,
+            null,
+            {
+                "visible": false
+            },
+        ],
+        "drawCallback": function(settings) {
+            var api = this.api();
+            var data = api.rows({
+                filter: 'applied'
+            }).data();
+            var income_cat = {};
+            var expense_cat = {};
+
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][4] == 'True') {
+                    if (data[i][3] in income_cat) {
+                        income_cat[data[i][3]] += parseFloat(data[i][1]);
+                    } else {
+                        income_cat[data[i][3]] = parseFloat(data[i][1]);
+                    }
+
+                } else {
+                    if (data[i][3] in expense_cat) {
+                        expense_cat[data[i][3]] += parseFloat(data[i][1]);
+                    } else {
+                        expense_cat[data[i][3]] = parseFloat(data[i][1]);
+                    }
+
+
+                }
+
+            }
+
+            var income_values = $.map(income_cat, function(value, key) {
+                return value
+            });
+            var income_keys = $.map(income_cat, function(value, key) {
+                return key
+            });
+            var expense_values = $.map(expense_cat, function(value, key) {
+                return value
+            });
+            var expense_keys = $.map(expense_cat, function(value, key) {
+                return key
+            });
+
+            if (typeof(this.Income) != "undefined") {
+                this.Income.destroy();
+            }
+
+
+            const ctx = document.getElementById('Income').getContext('2d');
+            this.Income = new Chart(ctx, {
+
+                type: 'bar',
+                data: {
+                    labels: income_keys,
+                    datasets: [{
+                        data: income_values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        title: {
+                            display: false,
+                            text: 'Income'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('Expense').getContext('2d');
+
+            if (typeof(this.Expense) != "undefined") {
+                this.Expense.destroy();
+            }
+            this.Expense = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: expense_keys,
+                    datasets: [{
+                        data: expense_values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        title: {
+                            display: true,
+                            text: 'Expense'
+                        },
+
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                            }
+                        }
+                    }
+                }
+            });
+            this.Expense.update()
+
+        }
+    })
 </script>
 
 {% endblock %}
-
-
 
 

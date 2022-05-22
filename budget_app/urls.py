@@ -29,5 +29,6 @@ urlpatterns = [
          views.add_income, name="add_income"),
     path(
         "budgets/<int:budget_id>/add_user/", views.add_user, name="add_user"
-    )
+    ),
+  
 ]

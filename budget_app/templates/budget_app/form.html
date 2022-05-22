@@ -1,10 +1,30 @@
 {% extends budget_base_path %}
+
+
+
 {% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-<button class="button" type="submit">zatwierdz</button>
-</form>
+<div style = "padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class = "form-group row" >
+            <label class = "col-sm-6 col-form-label" >{{field.label}}</label> 
+            
+            <div class="col-sm-6">
+                {{field}}
+            </div>
+        </div>
+        {% endfor %}
+        <div class = "form-group row" >
+            <label class = "col-sm-4 col-form-label" ></label> 
+            <div class = "col-sm-2"><button class = "btn btn-primary justify-content-center" type="submit">Zatwierdz</button></div>
+            <div class="col-sm-6"></div>
+        </div>
+
+    </form>
+</div>
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% for msg in messages %}
     <script>
