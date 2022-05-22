@@ -179,12 +179,13 @@
         <th class="th-sm">Amount</th>
         <th class="th-sm">Date</th>
         <th class="th-sm">Category</th>
+        <th class="th-sm">Income</th>
       </tr>
     </thead>
     <tbody>
     {% if d %}
     {% for i in expenseincome %}
-      <tr class="test">
+      <tr>
         <td>{{i.name}}</td>
         {% if i.category_id.is_income_category %}
             <td class="income" style="color:green">{{i.amount}}</td>
@@ -193,11 +194,16 @@
         {% endif %}
         <td>{{i.date}}</td>
         <td>{{i.category_id}}</td>
+        <td>{{i.category_id.is_income_category}}</td>
       </tr>
     {% endfor %}
     {% endif %}
     </tbody>
   </table>
+  <h4 class="allign-center">Expenses</h4>
+  <canvas id="Expense" width="400" height="100"></canvas>
+  <h4 class="allign-center">Income</h4>
+  <canvas id="Income" width="400" height="100"></canvas>
 </div>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -207,162 +213,178 @@
         </script>
     {% endfor %}
 
-    <!-- <canvas id="myChart" width="400" height="100"></canvas> -->
-    <canvas id="Expense" width="400" height="100"></canvas>
-    <h4 class="allign-center">Income</h4>
-    <canvas id="Income" width="400" height="100"></canvas>
+
 
 
 
 <script>
-var table = $('#myTable').dataTable( {
-    "drawCallback": function( settings ) {
-        var api = this.api();
-        // Output the data for the visible rows to the browser's console
-        data = api.rows( {page:'current'} ).data();
-        var income =  $('td.income')
-        var expense = $('td.expense')
-        var incomeData = api.rows(income).data();
-        var expenseData = api.rows(expense).data();
-        var income_cat = {};
-        var expense_cat = {};
+    $('#myTable').dataTable({
+        "columns": [
+            null,
+            null,
+            null,
+            null,
+            {
+                "visible": false
+            },
+        ],
+        "drawCallback": function(settings) {
+            var api = this.api();
+            var data = api.rows({
+                filter: 'applied'
+            }).data();
+            var income_cat = {};
+            var expense_cat = {};
 
-        for (let i = 0; i < incomeData.length; i++) { 
-            if(incomeData[i][3] in income_cat) {
-                income_cat[incomeData[i][3]] += parseFloat(incomeData[i][1]);
-            }else{
-                income_cat[incomeData[i][3]] = parseFloat(incomeData[i][1]);
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][4] == 'True') {
+                    if (data[i][3] in income_cat) {
+                        income_cat[data[i][3]] += parseFloat(data[i][1]);
+                    } else {
+                        income_cat[data[i][3]] = parseFloat(data[i][1]);
+                    }
+
+                } else {
+                    if (data[i][3] in expense_cat) {
+                        expense_cat[data[i][3]] += parseFloat(data[i][1]);
+                    } else {
+                        expense_cat[data[i][3]] = parseFloat(data[i][1]);
+                    }
+
+
+                }
+
             }
-        }
 
-        for (let i = 0; i < expenseData.length; i++) { 
-            if(expenseData[i][3] in expense_cat) {
-                expense_cat[expenseData[i][3]] += parseFloat(expenseData[i][1]);
-            }else{
-                expense_cat[expenseData[i][3]] = parseFloat(expenseData[i][1]);
+            var income_values = $.map(income_cat, function(value, key) {
+                return value
+            });
+            var income_keys = $.map(income_cat, function(value, key) {
+                return key
+            });
+            var expense_values = $.map(expense_cat, function(value, key) {
+                return value
+            });
+            var expense_keys = $.map(expense_cat, function(value, key) {
+                return key
+            });
+
+            if (typeof(this.Income) != "undefined") {
+                this.Income.destroy();
             }
-        }
-        var income_values = $.map(income_cat, function(value, key) { return value });
-        var income_keys = $.map(income_cat, function(value, key) { return key });
-        var expense_values = $.map(expense_cat, function(value, key) { return value });
-        var expense_keys = $.map(expense_cat, function(value, key) { return key });
 
-        if (typeof(this.Income) != "undefined") {
-            this.Income.destroy();
-        }
 
-    
             const ctx = document.getElementById('Income').getContext('2d');
             this.Income = new Chart(ctx, {
-    
-            type: 'bar',
-            data: {
-                labels: income_keys,
-                datasets: [{
-                    data: income_values,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+
+                type: 'bar',
+                data: {
+                    labels: income_keys,
+                    datasets: [{
+                        data: income_values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        title: {
+                            display: false,
+                            text: 'Income'
                         }
-                    }],
-                    title: {
-                        display: false,
-                        text: 'Income'
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                            }
+                        }
                     }
-                },
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                            return tooltipItem.yLabel;
-               }
-            }
-        }
-            }
-        });
+                }
+            });
 
-        const ctx2 = document.getElementById('Expense').getContext('2d');
+            const ctx2 = document.getElementById('Expense').getContext('2d');
 
-        if (typeof(this.Expense) != "undefined") {
-            this.Expense.destroy();
-        }
-        this.Expense = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: expense_keys,
-            datasets: [{
-                data: expense_values,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+            if (typeof(this.Expense) != "undefined") {
+                this.Expense.destroy();
+            }
+            this.Expense = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: expense_keys,
+                    datasets: [{
+                        data: expense_values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        title: {
+                            display: true,
+                            text: 'Expense'
+                        },
+
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                            }
+                        }
                     }
-                }],
-                title: {
-                    display: true,
-                    text: 'Expense'
-                },
-                
-            },
-            legend: {
-                display: false
-            },
-            tooltips: {
-            callbacks: {
-                label: function(tooltipItem) {
-                        return tooltipItem.yLabel;
-           }
-        }
-    }
-        }
-    });
-    this.Expense.update()
+                }
+            });
+            this.Expense.update()
 
-    }
-} )
+        }
+    })
 </script>
 
 {% endblock %}

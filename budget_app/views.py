@@ -30,6 +30,7 @@ def get_budget_list(request):
                     for i in budgetUser_objects]
     return budgets_list
 
+
 def get_user_list(budget_id):
     budgetUser_objects = BudgetUser.objects.filter(budget_id=budget_id)
     users = []
@@ -37,6 +38,7 @@ def get_user_list(budget_id):
         print(i.user_id.id)
         users.append(User.objects.get(id=i.user_id.id))
     return users
+
 
 def if_can_edit(budget_id, request):
     role = BudgetUser.objects.get(
@@ -108,7 +110,7 @@ def add_category(
             "categories": categories,
             "owner_or_edit": owner_or_edit,
             "budget": budget,
-            "users":users
+            "users": users
         },
     )
 
@@ -152,7 +154,7 @@ def edit_category(
             "budget": budget,
             "category": category,
             "parent": parent,
-            "users":users
+            "users": users
         },
     )
 
@@ -238,9 +240,9 @@ def view_budget(request, budget_id, base_path=base_path):
     data = []
     data = json.loads(expenseincome_json)
 
-    expenses = {'amount':[], 'category':[]}
-    incomes = {'amount':[], 'category':[]}
-    
+    expenses = {'amount': [], 'category': []}
+    incomes = {'amount': [], 'category': []}
+
     for i in expenseincome:
         if i.category_id.is_income_category():
             incomes['amount'].append(i.amount)
@@ -248,15 +250,12 @@ def view_budget(request, budget_id, base_path=base_path):
         else:
             expenses['amount'].append(i.amount)
             expenses['category'].append(i.category_id.name)
-    
+
     expenses = pd.DataFrame(expenses)
     incomes = pd.DataFrame(incomes)
 
     expenses = expenses.groupby('category').sum()
     incomes = incomes.groupby('category').sum()
-
-    income_amt, income_cat = [float(i) for i in list(incomes['amount'].values)], list(incomes['amount'].keys())
-    expense_amt, expense_cat = [float(i) for i in list(expenses['amount'].values)], list(expenses['amount'].keys())
 
     return render(
         request,
@@ -268,13 +267,8 @@ def view_budget(request, budget_id, base_path=base_path):
             "categories": categories,
             "owner_or_edit": owner_or_edit,
             "expenseincome": expenseincome,
-            "expenseincome_df": expenseincome_json,
             "d": data,
-            "income_amt":income_amt,
-            "income_cat":income_cat,
-            "expense_amt":expense_amt,
-            "expense_cat":expense_cat,
-            "users":users
+            "users": users
         },
     )
 
@@ -330,10 +324,10 @@ def add_income(
             "budget_base_path": budget_base_path,
             "base_path": base_path,
             "budgets_list": budgets_list,
-            "users":users,
+            "users": users,
             "owner_or_edit": owner_or_edit,
-            "categories":categories,
-            "budget":budget
+            "categories": categories,
+            "budget": budget
         },
     )
 
@@ -368,10 +362,10 @@ def add_expense(
             "budget_base_path": budget_base_path,
             "base_path": base_path,
             "budgets_list": budgets_list,
-            "users":users,
+            "users": users,
             "owner_or_edit": owner_or_edit,
-            "categories":categories,
-            "budget":budget })
+            "categories": categories,
+            "budget": budget})
 # Dodawanie istniejacego uzytkownika do budzetu
 
 
@@ -414,9 +408,9 @@ def add_user(
             "base_path": base_path,
             "budget_base_path": budget_base_path,
             "budgets_list": budgets_list,
-            "categories":categories,
+            "categories": categories,
             "owner_or_edit": owner_or_edit,
-            "users":users,
-            "budget":budget
+            "users": users,
+            "budget": budget
          },
     )
