@@ -425,4 +425,12 @@ def view_entries(request, budget_id, base_path=base_path, budget_base_path=budge
             }
     return render(request, "budget_app/view_entries.html", params)
  
-
+def delete_entry(request,budget_id, entry_id):
+    entry = ExpenseIncome.objects.get(id=entry_id)
+    if entry.category_id.is_income_category():
+        type_of_entry = "/view_incomes/"
+    else:
+        type_of_entry = "/view_expenses/"
+    entry.delete()
+    redirect_path = '/budgets/' + str(budget_id) + type_of_entry
+    return redirect(redirect_path)

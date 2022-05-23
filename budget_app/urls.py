@@ -36,5 +36,8 @@ urlpatterns = [
     path(
         "budgets/<int:budget_id>/view_incomes/", views.view_entries, name="view_incomes"
     ),
+    path(
+        "delete_entry/<int:budget_id>/<int:entry_id>/", views.delete_entry, name="delete_entry"
+    ),
 
 ]

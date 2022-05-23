@@ -29,6 +29,7 @@
             <th class="th-sm">Date</th>
             <th class="th-sm">Category</th>
             <th class="th-sm">Description</th>
+            <th class="th-sm" style="align-items: center;">Delete</th>
             <th class="th-sm">Income</th>
             </tr>
         </thead>
@@ -43,6 +44,11 @@
                     <td>{{i.date}}</td>
                     <td>{{i.category_id}}</td>
                     <td>{{i.description}}</td>
+                    <td> 
+                        <a href = "{% url 'delete_entry' budget.id i.id %}" class="btn btn-outline-danger btn-sm">
+                            Delete
+                        </a>
+                    </td>
                     <td>{{i.category_id.is_income_category}}</td>
                     </tr>
                 {% endif %}
@@ -50,10 +56,14 @@
                 {% if not i.category_id.is_income_category %}
                     <tr>
                     <td>{{i.name}}</td>
-                    <td class="income">{{i.amount}}</td>
+                    <td >{{i.amount}}</td>
                     <td>{{i.date}}</td>
                     <td>{{i.category_id}}</td>
                     <td>{{i.description}}</td>
+                    <td> <a  href = "{% url 'delete_entry' budget.id i.id %}" class="btn btn-outline-danger btn-sm">
+                            Delete
+                        </a>
+                    </td>
                     <td>{{i.category_id.is_income_category}}</td>
                     </tr>
                 {% endif %}
@@ -97,6 +107,7 @@
 
     Table = $('#myTable').dataTable({
         "columns": [
+            null,
             null,
             null,
             null,
