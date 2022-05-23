@@ -172,7 +172,7 @@ def add_budget(request, base_path=base_path):
         b = Budget(name=name, description=description)
         b.save()
         u = User.objects.get(id=request.user.id)
-        bu = BudgetUser(user_id=u, budget_id=b, role=1)
+        bu = BudgetUser(user_id=u, budget_id=b, role=Role.OWNER.value)
         bu.save()
         expense = Category(
             name="Expense",
@@ -233,7 +233,7 @@ def view_budget(request, budget_id, base_path=base_path):
 
     expenses = expenses.groupby('category').sum()
     incomes = incomes.groupby('category').sum()
-
+    print(categories)
     return render(
         request,
         "budget_app/view_budget.html",
@@ -395,3 +395,34 @@ def add_user(
             "budget": budget
          },
     )
+
+def view_entries(request, budget_id, base_path=base_path, budget_base_path=budget_base_path):
+    if request.get_full_path().split('/')[-2].split('_')[-1] == "incomes":
+        incomes = True
+    else:
+        incomes = False
+    expenseincome = ExpenseIncome.objects.filter(budget_id=budget_id)
+    budgets_list = get_budget_list(request)
+    categories = Category.objects.filter(budget_id=budget_id)
+    owner_or_edit = if_can_edit(budget_id, request)
+    users = get_user_list(budget_id)
+    budget = Budget.objects.get(id=budget_id)
+    expenseincome_json = pd.DataFrame(
+        expenseincome).reset_index().to_json(orient='records')
+    data = []
+    data = json.loads(expenseincome_json)
+    params = {
+                "base_path": base_path,
+                "budget_base_path": budget_base_path,
+                "budgets_list": budgets_list,
+                "categories": categories,
+                "owner_or_edit": owner_or_edit,
+                "users": users,
+                "budget": budget,
+                "expenseincome":expenseincome,
+                "d":data,
+                "incomes":incomes
+            }
+    return render(request, "budget_app/view_entries.html", params)
+ 
+

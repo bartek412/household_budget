@@ -58,20 +58,22 @@
         </div>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body" style="padding:10%; padding-top: 0%; padding-bottom: 0%;">
-                <!-- {% if owner_or_edit %} -->
+                {% if owner_or_edit %}
                 <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
                     <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_category" role="button">Add category</a>
                 </div>
-                <!-- {% endif %} -->
+                {% endif %}
                 <ul class="list-group list-group-flush" style="padding-left: 10%; padding-right: 10%;">
                     {% for i in categories %}
-                        {% if i.name != "Expense" and i.name != "Income" %}
-                            {% if owner_or_edit %}
-                            <li class="list-group-item" style="padding: 0.25rem 0.5rem; background-color: rgb(228, 243, 255);">
-                                    <a href = '/budgets/{{budget.id}}/category/{{i.id}}/edit/' style="padding-left: 0px; padding-top: 0px; font-size:13px;">{{i.name}}</a>
+                        {% if i.name != "Expense" and i.name != "Income" %}   
+                            {% if owner_or_edit %}    
+                                <li class="list-group-item" style="padding: 0.25rem 0.5rem; background-color: rgb(228, 243, 255);">
+                                        <a href = '/budgets/{{budget.id}}/category/{{i.id}}/edit/' style="padding-left: 0px; padding-top: 0px; font-size:13px;">{{i.name}}</a>
                                 </li>
                             {% else %}
-
+                                <li class="list-group-item" style="padding: 0.25rem 0.5rem; background-color: rgb(228, 243, 255);">
+                                    <a href = '#' style="padding-left: 0px; padding-top: 0px; font-size:13px;">{{i.name}}</a>
+                                </li>
                             {% endif %}
                         {% endif %}
                     {% endfor %}
@@ -126,9 +128,16 @@
         <div id="collapse_income" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body" style="padding:10%; padding-top: 0%; padding-bottom: 0%;">
                 {% if owner_or_edit %}
-                <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
-                    <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_income" role="button">Add Income</a>
-                </div>
+                    <div class="add-budget-button" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px; width: 48%; float: left; text-align: center;">
+                        <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_income" role="button">Add</a>
+                    </div>
+                    <div class="add-budget-button" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px; width: 48%; float: right; text-align: center;">
+                        <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/view_incomes" role="button">View</a>
+                    </div>
+                {% else %}
+                    <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
+                        <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/view_incomes" role="button">View</a>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -149,9 +158,16 @@
     <div id="collapse_expense" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body" style="padding:10%; padding-top: 0%; padding-bottom: 0%;">
             {% if owner_or_edit %}
-            <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
-                <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_expense" role="button">Add Expense</a>
-            </div>
+                <div class="add-budget-button" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px; width: 48%; float: left; text-align: center;">
+                    <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/add_expense" role="button">Add</a>
+                </div>
+                <div class="add-budget-button" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px; width: 48%; float: right; text-align: center;">
+                    <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/view_expenses" role="button">View</a>
+                </div>
+            {% else %}
+                <div class="add-budget-button row" style = "background-color:rgb(192, 208, 218);border-radius: 7.5px;">
+                    <a class = "btn btn-primary w-100" href = "/budgets/{{budget.id}}/view_expenses" role="button">View</a>
+                </div>
             {% endif %}
         </div>
     </div>

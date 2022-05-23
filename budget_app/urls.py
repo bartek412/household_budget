@@ -30,5 +30,11 @@ urlpatterns = [
     path(
         "budgets/<int:budget_id>/add_user/", views.add_user, name="add_user"
     ),
+    path(
+        "budgets/<int:budget_id>/view_expenses/", views.view_entries, name="view_expenses"
+    ),
+    path(
+        "budgets/<int:budget_id>/view_incomes/", views.view_entries, name="view_incomes"
+    ),
 
 ]

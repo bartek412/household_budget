@@ -1,0 +1,145 @@
+{% extends budget_base_path %}
+
+
+{% block content %}
+    <div class="container" style="padding-bottom: 1%; padding-top: 1%;">
+        
+    
+        <div class="inputFrame">
+        From:
+            <input
+                type="date"
+                id="min"
+                class="date-range-filter"
+                placeholder="Start date">
+    
+        To:
+            <input
+                type="date"
+                id="max"
+                class="date-range-filter"
+                placeholder="End date"></div>
+    
+    
+        <table id ="myTable" class="table table-light table-striped table-bordered table-sm">
+        <thead>
+            <tr>
+            <th class="th-sm">Name</th>
+            <th class="th-sm" style="text-align: right">Amount</th>
+            <th class="th-sm">Date</th>
+            <th class="th-sm">Category</th>
+            <th class="th-sm">Description</th>
+            <th class="th-sm">Income</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if d %}
+            {% for i in expenseincome %}
+                {% if not i.category_id.is_income_category %}
+                    <tr>
+                    <td>{{i.name}}</td>
+                    <td class="expense">{{i.amount}}</td>
+                    <td>{{i.date}}</td>
+                    <td>{{i.category_id}}</td>
+                    <td>{{i.description}}</td>
+                    <td>{{i.category_id.is_income_category}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </tbody>
+        </table>
+    </div>
+
+    <script>
+       $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var FilterStart = $('#min').val();
+            var FilterEnd = $('#max').val();
+            var DataTable = Date.parse(data[2].trim());
+
+            if (FilterStart == '') {
+                if(FilterEnd == '') {
+                    return true;
+                }
+                if(DataTable <= Date.parse(FilterEnd)){
+                    return true;
+                }
+            };
+            if(FilterEnd == ''){
+                if(DataTable >= Date.parse(FilterStart)){
+                    return true;
+                }
+            };
+
+            if(DataTable >= Date.parse(FilterStart) && DataTable <= Date.parse(FilterEnd)){
+                return true;
+            };
+            
+            return false;
+
+
+
+        });
+
+    Table = $('#myTable').dataTable({
+        "columns": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+                "visible": false
+            },
+        ],
+        "drawCallback": function(settings) {
+            var api = this.api();
+            var data = api.rows({
+                filter: 'applied'
+            }).data();
+            var income_cat = {};
+            var expense_cat = {};
+
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][4] == 'True') {
+                    if (data[i][3] in income_cat) {
+                        income_cat[data[i][3]] += parseFloat(data[i][1]);
+                    } else {
+                        income_cat[data[i][3]] = parseFloat(data[i][1]);
+                    }
+
+                } else {
+                    if (data[i][3] in expense_cat) {
+                        expense_cat[data[i][3]] += parseFloat(data[i][1]);
+                    } else {
+                        expense_cat[data[i][3]] = parseFloat(data[i][1]);
+                    }
+
+
+                }
+
+            }
+
+            var income_values = $.map(income_cat, function(value, key) {
+                return value
+            });
+            var income_keys = $.map(income_cat, function(value, key) {
+                return key
+            });
+            var expense_values = $.map(expense_cat, function(value, key) {
+                return value
+            });
+            var expense_keys = $.map(expense_cat, function(value, key) {
+                return key
+            });
+        }
+    })
+
+    $('.date-range-filter').change( function() {
+        Table.fnDraw();
+    } );
+
+
+    </script>
+{% endblock %}
