@@ -18,12 +18,18 @@
         {% endfor %}
         <div class = "form-group row" >
             <label class = "col-sm-4 col-form-label" ></label> 
-            <div class = "col-sm-2"><button class = "btn btn-primary justify-content-center" type="submit">Zatwierdz</button></div>
+            <button class = "btn btn-primary justify-content-center" type="submit"> <div class = "col-sm-2"> Zatwierdz </div></button>
             <div class="col-sm-6"></div>
         </div>
 
     </form>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#selectuser').select2();
+    });
+</script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% for msg in messages %}

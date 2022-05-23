@@ -13,6 +13,7 @@ from django.db.models import Q
 from enum import Enum
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 Role = Enum("Role", "OWNER EDIT VIEW")
@@ -35,7 +36,6 @@ def get_user_list(budget_id):
     budgetUser_objects = BudgetUser.objects.filter(budget_id=budget_id)
     users = []
     for i in budgetUser_objects:
-        print(i.user_id.id)
         users.append(User.objects.get(id=i.user_id.id))
     return users
 
@@ -79,21 +79,22 @@ def add_category(
 ):
     parent_categories = Category.objects.filter(budget_id=budget_id)
     if request.method == "POST":
-        # w odpowiedz post zwracany jest slownik z wartosciami z forma-a z template'u 'add_category'
-        # klucze w slowniku sa nazwami pol z template'u
-        name = request.POST["name"]
-        description = request.POST["description"]
-        parent_id = request.POST["parent_id"]
-        income = Category.objects.get(id=parent_id).is_income_category()
-        c = Category(
-            name=name,
-            description=description,
-            parent_id=Category.objects.get(id=parent_id),
-            budget_id=Budget.objects.get(id=budget_id),
-            income=income
-        )
-        c.save()
-        messages.success(request, 'Category added successfully')
+        if if_can_edit(budget_id, request):
+            name = request.POST["name"]
+            description = request.POST["description"]
+            parent_id = request.POST["parent_id"]
+            income = Category.objects.get(id=parent_id).is_income_category()
+            c = Category(
+                name=name,
+                description=description,
+                parent_id=Category.objects.get(id=parent_id),
+                budget_id=Budget.objects.get(id=budget_id),
+                income=income
+            )
+            c.save()
+            messages.success(request, 'Category added successfully')
+        else:
+            messages.error(request, "You do not have the privileges")
     budgets_list = get_budget_list(request)
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
@@ -164,31 +165,15 @@ def edit_category(
 def add_budget(request, base_path=base_path):
     added = False
 
-    users_objects = User.objects.all()
-    users = []
-    for i in users_objects:
-        users.append(i.username)
-
     if request.method == "POST":
-        added = True
         name = request.POST["name"]
         description = request.POST["description"]
-        users_list = request.POST.getlist("users_list")
-
         # Dodanie nazwy budzetu i opisu do tabeli Budget
         b = Budget(name=name, description=description)
         b.save()
-
-        for user in users_list:
-            u = User.objects.get(username=user)
-            # u.save()
-
-            budget_quantity = len(Budget.objects.all()) - 1
-            # Dodanie nazwy budzetu i opisu do tabeli Budget
-            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[budget_quantity], role=1)
-            # bu = BudgetUser(user_id=User(username=user), budget_id=Budget.objects.all()[1], role=1)
-            bu = BudgetUser(user_id=u, budget_id=b, role=1)
-            bu.save()
+        u = User.objects.get(id=request.user.id)
+        bu = BudgetUser(user_id=u, budget_id=b, role=1)
+        bu.save()
         expense = Category(
             name="Expense",
             description="Base Expense",
@@ -210,9 +195,7 @@ def add_budget(request, base_path=base_path):
         "budget_app/add_budget.html",
         {
             "base_path": base_path,
-            "users": users,
             "budgets_list": budgets_list,
-            'added': added,
         },
     )
 
@@ -367,12 +350,16 @@ def add_expense(
 def add_user(
     request, budget_id, base_path=base_path, budget_base_path=budget_base_path
 ):
+    usernames = list(User.objects.filter(
+        ~Q(id=request.user.id)).values_list('username', flat=True))
+    usernames_list = enumerate(usernames)
     if request.method == "POST":
-        form = AddUserForm(request.POST)
+        form = AddUserForm(usernames_list, request.POST)
         if form.is_valid():
             budget = Budget.objects.get(id=budget_id)
             try:
-                user = User.objects.get(username=form.cleaned_data['name'])
+                username = usernames[int(form.cleaned_data['name'])]
+                user = User.objects.get(username=username)
             except User.DoesNotExist:
                 user = None
                 messages.error(
@@ -389,7 +376,7 @@ def add_user(
                     messages.error(
                         request, 'User is already added')
     else:
-        form = AddUserForm()
+        form = AddUserForm(usernames_list,)
     budgets_list = get_budget_list(request)
     categories = Category.objects.filter(budget_id=budget_id)
     owner_or_edit = if_can_edit(budget_id, request)
