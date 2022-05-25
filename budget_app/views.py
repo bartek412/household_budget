@@ -53,13 +53,13 @@ def if_can_edit(budget_id, request):
 # Create your views here.
 def base(request):
     budgets_list = get_budget_list(request)
-    return render(request, "budget_app/base.html", {"budgets_list": budgets_list})
+    return render(request, "budget_app/homepage1.html", {"budgets_list": budgets_list})
 
 
 @login_required(login_url="login")
 def home(request, base_path=base_path):
     budgets_list = get_budget_list(request)
-    return render(request, "budget_app/home.html", {"base_path": base_path,
+    return render(request, "budget_app/homepage1.html", {"base_path": base_path,
                                                     "budgets_list": budgets_list})
 
 
@@ -189,7 +189,9 @@ def add_budget(request, base_path=base_path):
         income.save()
         messages.success(request, 'Budget added succesfully!')
         return redirect('/budgets/{}/'.format(b.id))
+    
     budgets_list = get_budget_list(request)
+  
     return render(
         request,
         "budget_app/add_budget.html",
@@ -395,7 +397,7 @@ def add_user(
             "budget": budget
          },
     )
-
+@login_required(login_url="login")
 def view_entries(request, budget_id, base_path=base_path, budget_base_path=budget_base_path):
     if request.get_full_path().split('/')[-2].split('_')[-1] == "incomes":
         incomes = True
@@ -434,3 +436,10 @@ def delete_entry(request,budget_id, entry_id):
     entry.delete()
     redirect_path = '/budgets/' + str(budget_id) + type_of_entry
     return redirect(redirect_path)
+@login_required(login_url="login")
+def homepage(request):
+    try:
+        budgets_list = get_budget_list(request)
+    except Exception:
+        budgets_list = False
+    return render(request, 'budget_app/homepage1.html', {"budgets_list":budgets_list})

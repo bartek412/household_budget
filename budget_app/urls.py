@@ -39,5 +39,6 @@ urlpatterns = [
     path(
         "delete_entry/<int:budget_id>/<int:entry_id>/", views.delete_entry, name="delete_entry"
     ),
+    path("homepage/", views.homepage, name="homepage"),
 
 ]
