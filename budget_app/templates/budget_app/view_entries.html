@@ -29,7 +29,9 @@
             <th class="th-sm">Date</th>
             <th class="th-sm">Category</th>
             <th class="th-sm">Description</th>
+                {% if owner_or_edit %}
             <th class="th-sm" style="align-items: center;">Delete</th>
+                {% endif %}
             <th class="th-sm">Income</th>
             </tr>
         </thead>
@@ -44,11 +46,13 @@
                     <td>{{i.date}}</td>
                     <td>{{i.category_id}}</td>
                     <td>{{i.description}}</td>
+                        {% if owner_or_edit %}
                     <td> 
                         <a href = "{% url 'delete_entry' budget.id i.id %}" class="btn btn-outline-danger btn-sm">
-                            Delete
+                            Deletes
                         </a>
                     </td>
+                            {% endif %}
                     <td>{{i.category_id.is_income_category}}</td>
                     </tr>
                 {% endif %}
@@ -60,10 +64,12 @@
                     <td>{{i.date}}</td>
                     <td>{{i.category_id}}</td>
                     <td>{{i.description}}</td>
+                        {% if owner_or_edit %}
                     <td> <a  href = "{% url 'delete_entry' budget.id i.id %}" class="btn btn-outline-danger btn-sm">
                             Delete
                         </a>
                     </td>
+                            {% endif %}s
                     <td>{{i.category_id.is_income_category}}</td>
                     </tr>
                 {% endif %}
